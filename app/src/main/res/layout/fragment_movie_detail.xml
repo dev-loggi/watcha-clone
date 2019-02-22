@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:fitsSystemWindows="true"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             tools:context=".view.recommendation.MovieDetailFragment">
+
+    <!-- 영화 이미지 wide -->
+    <FrameLayout android:layout_width="0dp" android:layout_height="230dp"
+                 android:id="@+id/iv_movie_wide2"
+                 app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent" >
+
+        <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+                   android:src="@drawable/poster_spiderman" android:scaleType="centerCrop"
+                   android:id="@+id/iv_movie_wide"/>
+
+        <!-- image mask -->
+        <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/gradation_background_image_mask" android:alpha="0.8"/>
+
+    </FrameLayout>
+
+    <!-- 스크롤뷰: 컨텐츠 들어가는 부분 -->
+    <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp" android:fillViewport="true"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical">
+
+            <!-- 컨텐츠 헤더 -->
+            <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
+                                                         android:layout_height="220dp">
+
+                <com.example.csr83.watchaproject.utils.RadiusImageView
+                        android:layout_width="80dp" android:layout_height="120dp" android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="16dp" android:layout_marginStart="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+                        app:topLeftRadius="8dp" app:topRightRadius="8dp" app:bottomLeftRadius="8dp"
+                        app:bottomRightRadius="8dp"
+                        android:id="@+id/iv_movie_tall"/>
+                <TextView
+                        android:text="2018 · 영화"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_movie_subtitle" app:layout_constraintStart_toEndOf="@+id/iv_movie_tall"
+                        android:layout_marginLeft="10dp" android:layout_marginStart="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/iv_movie_tall"
+                        android:textColor="@android:color/darker_gray" android:layout_marginBottom="2dp"/>
+                <TextView
+                        android:text="스파이더맨"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_movie_title"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_movie_subtitle"
+                        app:layout_constraintStart_toStartOf="@+id/tv_movie_subtitle"
+                        android:textSize="20sp" android:textColor="@color/white" android:textStyle="bold"
+                        android:layout_marginBottom="2dp"/>
+
+            </android.support.constraint.ConstraintLayout>
+
+            <!-- 컨텐츠 메인 -->
+            <LinearLayout android:id="@+id/container_header"
+                          android:layout_width="wrap_content"
+                          android:layout_height="match_parent"
+                          android:orientation="vertical"
+                          android:gravity="center_horizontal"
+                          android:background="@drawable/top_round_corner_background">
+
+                <RatingBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ratingBar"
+                        android:numStars="5"
+                        android:stepSize="0.5"
+                        android:max="5"
+                        android:layout_margin="16dp"/>
+
+                <View android:layout_height="10dp" android:layout_width="match_parent" android:background="@color/stroke"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/text_margin"
+                        android:text="@string/large_text"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <!-- 상단의 커스텀 툴바 -->
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:background="@android:color/transparent"
+            android:id="@+id/toolbar_layout" >
+
+        <!-- statusbar 크기로 밑에 깔려있는 흰색 바 -->
+        <View android:id="@+id/fake_status_bar" android:layout_width="match_parent"
+              android:layout_height="1dp" android:background="@android:color/transparent"
+              tools:layout_editor_absoluteX="10dp"/>
+
+        <ImageButton android:src="@drawable/arrow_back"
+                     android:layout_width="?attr/actionBarSize"
+                     android:layout_height="?attr/actionBarSize"
+                     android:id="@+id/ib_back"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintBottom_toBottomOf="parent"
+                     app:layout_constraintTop_toBottomOf="@+id/fake_status_bar" android:layout_margin="0dp"
+                     android:background="@android:color/transparent"
+                     android:scaleType="fitCenter" android:padding="16dp" android:tint="@color/white"/>
+
+        <TextView android:id="@+id/tv_toolbar_title"
+                  android:layout_width="0dp" android:layout_height="?attr/actionBarSize"
+                  android:paddingLeft="8dp" android:gravity="center_vertical"
+                  android:textSize="20sp" android:textStyle="bold" android:textColor="@android:color/black"
+                  android:text="스파이더맨"
+                  android:visibility="gone"
+                  app:layout_constraintTop_toBottomOf="@+id/fake_status_bar" app:layout_constraintStart_toEndOf="@id/ib_back"
+                  app:layout_constraintEnd_toStartOf="@id/ib_share"/>
+
+        <ImageButton android:src="@drawable/share"
+                     android:layout_width="?attr/actionBarSize"
+                     android:layout_height="?attr/actionBarSize"
+                     android:id="@+id/ib_share"
+                     app:layout_constraintTop_toBottomOf="@+id/fake_status_bar"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintBottom_toBottomOf="parent"
+                     android:background="@android:color/transparent"
+                     android:scaleType="fitCenter" android:padding="16dp" android:tint="@color/white"/>
+
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
+
+</android.support.constraint.ConstraintLayout>
