@@ -5,31 +5,54 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.MainActivity">
+        tools:context=".view.main.MainActivity">
 
-    <LinearLayout android:layout_width="411dp"
+    <FrameLayout android:id="@+id/fragment_container"
+                 android:layout_width="0dp" android:layout_height="0dp"
+                 app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                 app:layout_constraintTop_toTopOf="parent"
+    />
+
+    <!-- Bottom Navigation -->
+    <LinearLayout android:layout_width="0dp"
                   android:layout_height="wrap_content"
                   android:orientation="vertical"
                   android:id="@+id/linearLayout" app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-                  android:layout_marginBottom="0dp">
+                  app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent">
 
         <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/stroke"/>
+
 
         <android.support.design.widget.TabLayout
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:tabIndicator="@android:color/transparent"/>
+                app:tabIndicator="@android:color/transparent">
+
+            <android.support.design.widget.TabItem android:id="@+id/tab0"
+                                                   android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                                   android:icon="@drawable/home"
+                                                   android:text="@string/tab_title_recommendation"/>
+
+            <android.support.design.widget.TabItem android:id="@+id/tab1"
+                                                   android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                                   android:icon="@drawable/star"
+                                                   android:text="@string/tab_title_evaluation"/>
+
+            <android.support.design.widget.TabItem android:id="@+id/tab2"
+                                                   android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                                   android:icon="@drawable/news"
+                                                   android:text="@string/tab_title_news"/>
+
+            <android.support.design.widget.TabItem android:id="@+id/tab3"
+                                                   android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                                   android:icon="@drawable/profile"
+                                                   android:text="@string/tab_title_mypage"/>
+
+        </android.support.design.widget.TabLayout>
 
     </LinearLayout>
-
-    <com.example.csr83.watchaproject.utils.SwipeEnableViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
-
 
 </android.support.constraint.ConstraintLayout>
