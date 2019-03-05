@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical"
+              android:background="@android:color/transparent"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <!-- First -->
+    <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
+                                                 android:layout_height="100dp"
+                                                 android:background="@drawable/top_round_corner_background">
+
+        <ImageView android:layout_width="50dp" android:layout_height="70dp"
+                   android:id="@+id/iv_movie" android:layout_marginBottom="16dp"
+                   app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="16dp"
+                   app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                   android:layout_marginLeft="16dp" android:layout_marginStart="16dp"/>
+
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:orientation="vertical" android:layout_marginTop="8dp"
+                      app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                      app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toEndOf="@+id/iv_movie"
+                      android:layout_marginLeft="8dp" android:layout_marginStart="8dp">
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:id="@+id/tv_movie_title" android:text="제목"
+                      android:textSize="18sp" android:textColor="@android:color/black"/>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:id="@+id/tv_movie_subtitle" android:text="2000 한국"
+                      android:textColor="@color/text_color_dark_gray"/>
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <!-- Second -->
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/stroke"/>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:orientation="horizontal">
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:padding="8dp"
+                      android:orientation="vertical"
+                      android:layout_weight="1" android:gravity="center">
+
+            <ImageView android:layout_width="30dp" android:layout_height="30dp"
+                       app:srcCompat="@drawable/temp"/>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="보고싶어요"/>
+
+        </LinearLayout>
+
+        <View android:layout_width="1dp" android:layout_height="match_parent" android:background="@color/stroke"/>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:padding="8dp"
+                      android:orientation="vertical"
+                      android:layout_weight="1" android:gravity="center">
+
+            <ImageView android:layout_width="30dp" android:layout_height="30dp"
+                       app:srcCompat="@drawable/temp"/>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="보는 중"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/stroke"/>
+
+    <!-- Third -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="16dp"
+                  android:orientation="horizontal">
+
+        <ImageView android:layout_width="15dp" android:layout_height="15dp"
+                   app:srcCompat="@drawable/temp"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="16dp"
+                  android:text="본 날짜 추가"/>
+
+    </LinearLayout>
+
+    <!-- Fourth -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="16dp"
+                  android:orientation="horizontal">
+
+        <ImageView android:layout_width="15dp" android:layout_height="15dp"
+                   app:srcCompat="@drawable/temp"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="16dp"
+                  android:text="코멘트 작성"/>
+
+    </LinearLayout>
+
+    <!-- Fifth -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="16dp"
+                  android:orientation="horizontal">
+
+        <ImageView android:layout_width="15dp" android:layout_height="15dp"
+                   app:srcCompat="@drawable/temp"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="16dp"
+                  android:text="내 컬렉션에 추가"/>
+
+    </LinearLayout>
+
+    <!-- Sixth -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="16dp"
+                  android:orientation="horizontal">
+
+        <ImageView android:layout_width="15dp" android:layout_height="15dp"
+                   app:srcCompat="@drawable/temp"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="16dp"
+                  android:text="관심없어요"/>
+
+    </LinearLayout>
+
+</LinearLayout>

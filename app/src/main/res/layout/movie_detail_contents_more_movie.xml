@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingTop="16sp" android:paddingBottom="16sp">
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:layout_marginLeft="16sp"
+              android:text="관련된 영화 추천"
+              android:textSize="18sp" android:textStyle="bold" android:textColor="@android:color/black"/>
+
+    <android.support.v7.widget.RecyclerView android:id="@+id/recycler_view"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal"
+                                            android:layout_marginTop="8dp"
+                                            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+</LinearLayout>
