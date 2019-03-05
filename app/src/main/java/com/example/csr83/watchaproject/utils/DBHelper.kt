@@ -42,7 +42,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         val db = writableDatabase
 
         val query = "INSERT INTO $TABLE_MOVIE_RATING ($COLUMN_MOVIE_TITLE, $COLUMN_RATING) " +
-                    "VALUES ('$title', $rating);"
+                "VALUES ('$title', $rating);"
 
         try {
             db.execSQL(query)
@@ -65,11 +65,9 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
     fun selectMovieRating(title: String): Float? {
         val db = readableDatabase
-
         val query = "SELECT $COLUMN_RATING FROM $TABLE_MOVIE_RATING WHERE $COLUMN_MOVIE_TITLE = '$title'"
 
         var rating : Float? = null
-
         try {
             val cursor = db.rawQuery(query, null)
 
@@ -84,13 +82,32 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return rating
     }
 
+    fun selectAllMovieRating(): ArrayList<Float> {
+        val db = readableDatabase
+        val query = "SELECT $COLUMN_RATING FROM $TABLE_MOVIE_RATING"
+
+        val listRatings = arrayListOf<Float>()
+        try {
+            val cursor = db.rawQuery(query, null)
+
+            while (cursor.moveToNext()) {
+                listRatings.add(cursor.getFloat(0))
+            }
+
+            cursor.close()
+        } catch (e: SQLiteException) {
+            e.printStackTrace()
+        }
+        return listRatings
+    }
+
     fun updateMovieRating(title: String, rating: Float) {
         if (isExistRatingData(title)) {
             val db = writableDatabase
 
             val query = "UPDATE $TABLE_MOVIE_RATING " +
-                        "SET $COLUMN_RATING = $rating " +
-                        "WHERE $COLUMN_MOVIE_TITLE = '$title'"
+                    "SET $COLUMN_RATING = $rating " +
+                    "WHERE $COLUMN_MOVIE_TITLE = '$title'"
 
             try {
                 db.execSQL(query)
@@ -132,4 +149,3 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         private const val COLUMN_RATING = "rating"
     }
 }
-

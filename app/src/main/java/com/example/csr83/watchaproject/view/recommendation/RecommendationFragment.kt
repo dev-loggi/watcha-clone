@@ -1,5 +1,7 @@
 package com.example.csr83.watchaproject.view.recommendation
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
@@ -7,38 +9,30 @@ import android.support.v4.widget.NestedScrollView
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.*
+import android.widget.Button
 import android.widget.LinearLayout
 import com.example.csr83.watchaproject.view.recommendation.adapter.RecommendationRvAdapter
 import com.example.csr83.watchaproject.R
 import com.example.csr83.watchaproject.model.Movie
 import com.example.csr83.watchaproject.utils.Utils
-import kotlinx.android.synthetic.main.fragment_recommendation.*
+import com.example.csr83.watchaproject.view.base.BaseParentFragment
+import com.example.csr83.watchaproject.view.main.MainActivity
+import kotlinx.android.synthetic.main.fragment_recommendation2.*
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class RecommendationFragment : BaseParentFragment() {
 
-class RecommendationFragment : Fragment() {
-
-    val TAG = "RecommendationFragment"
-
-    private var param1: String? = null
-    private var param2: String? = null
-
-    private var statusBarHeight : Int = 0
+    private val TAG = javaClass.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        Utils.setTranslucentStatusBar(activity?.window)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_recommendation, container, false)
+        return inflater.inflate(R.layout.fragment_recommendation2, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -55,31 +49,27 @@ class RecommendationFragment : Fragment() {
     }
 
     fun startMovieDetailFragment(movie: Movie) {
-        val fragment = MovieDetailFragment.newInstance(movie)
-
-        val childFragmentTransaction = childFragmentManager.beginTransaction()
-        childFragmentTransaction.add(R.id.container, fragment)
-        childFragmentTransaction.addToBackStack(null)
-        childFragmentTransaction.commit()
+        (activity as MainActivity).myFragmentAdapter!!.createNewFragment(
+            R.id.fragment_container,
+            MovieDetailFragment.newInstance(super.getTabPosition(), super.getFragmentFloor() + 1, movie),
+            super.getTabPosition(),
+            super.getFragmentFloor() + 1
+        )
     }
 
     private fun setScrollingAnimation() {
         // statusbar 의 height 측정
-        statusBarHeight = Utils.getStatusBarHeight(context)
+        val statusBarHeight = Utils.getStatusBarHeight(context)
 
-        // fake_status_bar 의 height 설정
-        val layoutParams = fake_status_bar.layoutParams as LinearLayout.LayoutParams
-        layoutParams.height = statusBarHeight
-        fake_status_bar.layoutParams = layoutParams
+        // scrim_status_bar 의 height 설정
+        (scrim_status_bar.layoutParams as LinearLayout.LayoutParams).height = statusBarHeight
 
         // 스크롤뷰 리스너
         nested_scroll_view.setOnScrollChangeListener { view: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
             Log.d(TAG, "setOnScrollChangeListener(), scrollX_"+scrollX+"_scrollY_"+scrollY+"_oldScrollX_"+oldScrollX+"_oldScrollY_"+oldScrollY)
 
             // WATCHA 로고 움직이기
-            val params = logo_watcha.layoutParams as ConstraintLayout.LayoutParams
-            params.topMargin = scrollY / 2
-            logo_watcha.layoutParams = params
+            (logo_watcha.layoutParams as ConstraintLayout.LayoutParams).topMargin = scrollY / 2
 
             // 상단바 show & hide
             if (search_layout.y < statusBarHeight + scrollY) {
@@ -87,17 +77,16 @@ class RecommendationFragment : Fragment() {
             } else {
                 toolbar_layout.visibility = View.GONE
             }
-            Log.d(TAG, "logoWatchaParams!!.topMargin=${params.topMargin}, search_layout.y=${search_layout.y}, statusBarHeight=$statusBarHeight")
         }
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(tabPosition: Int, fragmentFloor: Int) =
             RecommendationFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putInt(ARG_PARAM_TAB_POSITION, tabPosition)
+                    putInt(ARG_PARAM_FRAGMENT_FLOOR, fragmentFloor)
                 }
             }
     }

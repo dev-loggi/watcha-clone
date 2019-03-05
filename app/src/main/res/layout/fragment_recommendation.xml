@@ -202,7 +202,7 @@
                   android:visibility="gone">
 
         <!-- statusbar 크기로 밑에 깔려있는 흰색 바 -->
-        <View android:id="@+id/fake_status_bar" android:layout_width="match_parent"
+        <View android:id="@+id/scrim_status_bar" android:layout_width="match_parent"
               android:layout_height="0dp" android:background="@color/white"/>
 
         <FrameLayout

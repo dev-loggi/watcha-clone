@@ -11,6 +11,8 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.csr83.watchaproject.R
 import com.example.csr83.watchaproject.model.Movie
+import com.example.csr83.watchaproject.utils.Utils
+import com.example.csr83.watchaproject.view.recommendation.MovieDetailFragment
 import com.example.csr83.watchaproject.view.recommendation.RecommendationFragment
 import kotlinx.android.synthetic.main.recycler_view_card.view.*
 import org.json.JSONException
@@ -25,7 +27,7 @@ class RecommendationRvAdapter(val fragment: RecommendationFragment) : RecyclerVi
     private var listMovie = ArrayList<Movie>()
 
     init {
-        loadData()
+        listMovie = Utils.loadData(fragment.activity!!)
     }
 
     override fun getItemCount(): Int { return 20 }
@@ -44,7 +46,6 @@ class RecommendationRvAdapter(val fragment: RecommendationFragment) : RecyclerVi
                     .load(item.image_wide)
                     .fitCenter()
                     .centerCrop()
-                    .listener(requestListener)
                     .into(ivMovie)
                 tvMovieTitle.text = item.title
                 tvMovieSubtitle.text = "영화 · ${item.year}"
@@ -53,47 +54,6 @@ class RecommendationRvAdapter(val fragment: RecommendationFragment) : RecyclerVi
                     fragment.startMovieDetailFragment(item)
                 }
             }
-        }
-    }
-
-    private fun loadData() {
-        // assets 폴더의 data.txt 파일 데이터 읽기
-        val assetManager: AssetManager = fragment.activity!!.resources.assets
-        val inputStream: InputStream = assetManager.open("data.txt")
-        val inputString = inputStream.bufferedReader().use { it.readText() }
-
-        // json 데이터 파싱 후 listMovie 에 추가
-        try {
-            val jsonData = JSONObject(inputString)
-            val jsonArrayMovie = jsonData.getJSONArray("movie")
-            for (i in 0 until jsonArrayMovie.length()) {
-                val jsonMovie = jsonArrayMovie.getJSONObject(i)
-                val movie = Movie(
-                    jsonMovie.getString("title"),
-                    jsonMovie.getString("image_wide"),
-                    jsonMovie.getString("image_tall"),
-                    jsonMovie.getString("year")
-                )
-                listMovie.add(movie)
-            }
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-    }
-
-
-    // Glide Request Listener
-    private val requestListener = object : RequestListener<String, GlideDrawable> {
-        override fun onException(e: Exception, model: String, target: Target<GlideDrawable>, isFirstResource: Boolean): Boolean {
-            Log.e(TAG, "onException(), " + e.message)
-            e.printStackTrace()
-            return false
-        }
-        override fun onResourceReady(resouorce: GlideDrawable, model: String, target: Target<GlideDrawable>, isFromMemoryCache: Boolean, isFirstResource: Boolean): Boolean {
-            // 이미지 로드 완료됬을 때 처리
-            Log.d(TAG, "onResourceReady()")
-
-            return false
         }
     }
 

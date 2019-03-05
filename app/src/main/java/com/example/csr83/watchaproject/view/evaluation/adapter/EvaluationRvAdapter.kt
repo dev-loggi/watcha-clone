@@ -1,92 +1,102 @@
 package com.example.csr83.watchaproject.view.evaluation.adapter
 
-import android.content.res.AssetManager
+import android.os.Bundle
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.RatingBar
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.GlideDrawable
-import com.bumptech.glide.request.RequestListener
 import com.example.csr83.watchaproject.R
 import com.example.csr83.watchaproject.model.Movie
+import com.example.csr83.watchaproject.utils.Constants
+import com.example.csr83.watchaproject.utils.DBHelper
+import com.example.csr83.watchaproject.utils.Utils
+import com.example.csr83.watchaproject.view.evaluation.CustomBottomSheetDialogFragment
 import com.example.csr83.watchaproject.view.evaluation.EvaluationFragment
-import kotlinx.android.synthetic.main.recycler_view_card.view.*
-import org.json.JSONException
-import org.json.JSONObject
-import java.io.InputStream
+import kotlinx.android.synthetic.main.recycler_view_evaluation_item.view.*
 
 class EvaluationRvAdapter(val fragment: EvaluationFragment) : RecyclerView.Adapter<EvaluationRvAdapter.CardViewHolder>() {
 
-    val TAG = "RecommendationRvAdapter"
+    val TAG = javaClass.simpleName
 
-    private var listMovie = ArrayList<Movie>()
+    private var listMovie = arrayListOf<Movie>()
+    private var listRatingPoints = arrayListOf<Float>()
+    private var dbHelper: DBHelper? = null
 
     init {
-        loadData()
+        listMovie = Utils.loadData(fragment.activity!!)
+        dbHelper = DBHelper(fragment.activity!!)
+
+        for (movie in listMovie) {
+            listRatingPoints.add(dbHelper!!.selectMovieRating(movie.title) ?: 0f)
+        }
+        fragment.setHeaderTitle(getNumberOfMoviesRated())
     }
 
-    override fun getItemCount(): Int { return 20 }
+    override fun getItemCount(): Int { return listMovie.size }
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int) = CardViewHolder(parent)
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-        listMovie[position + 20].let { item ->
+        listMovie[position].let { item ->
             with(holder) {
-                tvCardTitle.text = "트렌드 추천"
-                tvCardSubtitleLeft.text = "요즘 왓챠 인기작 중, "
-                tvCardSubtitleUserName.text = "조성록"
-                tvCardSubtitleRight.text = "님이 좋아할 작품"
-                Log.d(TAG, "onBindViewHolder(), image_wide=${item.image_wide}")
                 Glide.with(fragment.activity)
-                    .load(item.image_wide)
+                    .load(item.image_tall)
                     .fitCenter()
                     .centerCrop()
                     .into(ivMovie)
+
                 tvMovieTitle.text = item.title
-                tvMovieSubtitle.text = "영화 · ${item.year}"
+                tvMovieSubtitle.text = "${item.year} · 한국"
+
+                ivMovie.setOnClickListener {
+                    fragment.startMovieDetailFragment(item)
+                }
+
+                ibMore.setOnClickListener {
+                    val dialog = CustomBottomSheetDialogFragment()
+                    val arg = Bundle()
+                    arg.putSerializable(Constants.ARG_PARAM_MOVIE, item)
+                    dialog.arguments = arg
+                    dialog.show(fragment.activity!!.supportFragmentManager, dialog.tag)
+                }
+
+                setRatingBar(ratingBar, item, position)
             }
         }
     }
 
-    private fun loadData() {
-        // assets 폴더의 data.txt 파일 데이터 읽기
-        val assetManager: AssetManager = fragment.activity!!.resources.assets
-        val inputStream: InputStream = assetManager.open("data.txt")
-        val inputString = inputStream.bufferedReader().use { it.readText() }
+    @SuppressWarnings("ClickableViewAccessibility")
+    private fun setRatingBar(ratingBar: RatingBar, item: Movie, position: Int) {
+        ratingBar.rating = dbHelper!!.selectMovieRating(item.title) ?: 0f
 
-        // json 데이터 파싱 후 listMovie 에 추가
-        try {
-            val jsonData = JSONObject(inputString)
-            val jsonArrayMovie = jsonData.getJSONArray("movie")
-            for (i in 0 until jsonArrayMovie.length()) {
-                val jsonMovie = jsonArrayMovie.getJSONObject(i)
-                val movie = Movie(
-                    jsonMovie.getString("title"),
-                    jsonMovie.getString("image_wide"),
-                    jsonMovie.getString("image_tall"),
-                    jsonMovie.getString("year")
-                )
-                listMovie.add(movie)
+        ratingBar.onRatingBarChangeListener = RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser ->
+            if (fromUser) {
+                dbHelper!!.updateMovieRating(item.title, rating)
+                listRatingPoints[position] = rating
+                fragment.setHeaderTitle(getNumberOfMoviesRated())
             }
-        } catch (e: JSONException) {
-            e.printStackTrace()
         }
     }
 
-
-
+    private fun getNumberOfMoviesRated(): Int {
+        var sum = 0
+        for (rating in listRatingPoints) {
+            if (rating > 0) {
+                sum++
+            }
+        }
+        return sum
+    }
 
     inner class CardViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         LayoutInflater.from(parent.context)
-            .inflate(R.layout.recycler_view_card, parent, false)) {
+            .inflate(R.layout.recycler_view_evaluation_item, parent, false)) {
 
-        val tvCardTitle = itemView.tv_card_title
-        val tvCardSubtitleLeft = itemView.tv_card_subtitle_left
-        val tvCardSubtitleUserName = itemView.tv_card_subtitle_user_name
-        val tvCardSubtitleRight = itemView.tv_card_subtitle_right
         val ivMovie = itemView.iv_movie
         val tvMovieTitle = itemView.tv_movie_title
         val tvMovieSubtitle = itemView.tv_movie_subtitle
+        val ratingBar = itemView.ratingBar
+        val ibMore = itemView.ib_more
     }
 }

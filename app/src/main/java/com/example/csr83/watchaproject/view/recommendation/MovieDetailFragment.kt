@@ -3,7 +3,6 @@ package com.example.csr83.watchaproject.view.recommendation
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
-import android.support.v4.app.Fragment
 import android.support.v4.widget.NestedScrollView
 import android.util.Log
 import android.view.*
@@ -11,35 +10,31 @@ import android.widget.*
 import com.bumptech.glide.Glide
 import com.example.csr83.watchaproject.R
 import com.example.csr83.watchaproject.model.Movie
+import com.example.csr83.watchaproject.utils.Constants
 import com.example.csr83.watchaproject.utils.DBHelper
 import com.example.csr83.watchaproject.utils.Utils
-import com.example.csr83.watchaproject.view.MainActivity
+import com.example.csr83.watchaproject.view.base.BaseChildFragment
+import com.example.csr83.watchaproject.view.main.MainActivity
+import com.example.csr83.watchaproject.view.recommendation.adapter.MovieDetailMoreMovieRvAdapter
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
-import java.util.concurrent.locks.ReentrantLock
+import kotlinx.android.synthetic.main.movie_detail_contents_more_movie.*
 
 
-private const val ARG_PARAM1 = "movie"
-
-class MovieDetailFragment : Fragment() {
+class MovieDetailFragment : BaseChildFragment(), MainActivity.OnBackPressedListener {
 
     val TAG = "MovieDetailFragment"
 
-    private var movie: Movie =
-        Movie("", "", "", "")
+    private var movie = Movie("", "", "", "")
     private var dbHelper: DBHelper? = null
     private var movieRatingPoints: Float = 0f
-    private var statusBarHeight : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            movie = it.getSerializable(ARG_PARAM1) as Movie
+            movie = it.getSerializable(Constants.ARG_PARAM_MOVIE) as Movie
         }
-        (activity as MainActivity).saveFragment(this)
     }
 
-
-    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,14 +47,26 @@ class MovieDetailFragment : Fragment() {
 
         dbHelper = DBHelper(context!!)
 
+        (activity as MainActivity).addOnBackPressedListener(this)
+
         initView()
 
+        setRatingBar()
         setScrollingAnimation()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         dbHelper!!.close()
+    }
+
+    fun startMovieDetailFragment(movie: Movie) {
+        (activity as MainActivity).myFragmentAdapter!!.createNewFragment(
+            R.id.fragment_container,
+            MovieDetailFragment.newInstance(super.getTabPosition(), super.getFragmentFloor() + 1, movie),
+            super.getTabPosition(),
+            super.getFragmentFloor() + 1
+        )
     }
 
     private fun initView() {
@@ -75,40 +82,49 @@ class MovieDetailFragment : Fragment() {
             .fitCenter()
             .into(iv_movie_tall)
 
-        tv_movie_title.setText(movie.title)
-        tv_movie_subtitle.setText(movie.year + " · 영화")
+        tv_movie_title.text = movie.title
+        tv_movie_subtitle.text = "${movie.year} · 영화"
+        tv_toolbar_title.text = movie.title
 
+        // scrim_status_bar 의 height 설정
+        (scrim_status_bar.layoutParams as ConstraintLayout.LayoutParams).height = Utils.getStatusBarHeight(context)
+
+        ib_back.setOnClickListener {
+            super.onBackPressed()
+        }
+
+        recycler_view.adapter = MovieDetailMoreMovieRvAdapter(this)
+    }
+
+    private fun setRatingBar() {
         movieRatingPoints = dbHelper!!.selectMovieRating(movie.title) ?: 0f
         ratingBar.rating = movieRatingPoints
-
-        // statusbar 의 height 측정
-        statusBarHeight = Utils.getStatusBarHeight(context)
-
-        // fake_status_bar 의 height 설정
-        val layoutParams = fake_status_bar.layoutParams as ConstraintLayout.LayoutParams
-        layoutParams.height = statusBarHeight
-        fake_status_bar.layoutParams = layoutParams
 
         ratingBar.onRatingBarChangeListener = RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser ->
             Log.d(TAG, "OnRatingBarChangeListener(), rating=$rating, fromUser=$fromUser")
             if (fromUser) {
                 dbHelper!!.updateMovieRating(movie.title, rating)
+                movieRatingPoints = rating
             }
         }
 
-        ratingBar.setOnTouchListener { v, event ->
-            Log.d(TAG, "setOnTouchListener(), event.action=${event}, movieRatingPoints=$movieRatingPoints, rating=${(v as RatingBar).rating}, ")
-//            if (event.action == MotionEvent.ACTION_UP && (v as RatingBar).rating == movieRatingPoints) {
-//                Log.e(TAG, "ok")
-//                (v as RatingBar).rating = 0f
-//                dbHelper!!.deleteMovieRating(movie.title)
+//        ratingBar.setOnTouchListener { v, event ->
+//            Log.d(TAG, "setOnTouchListener(), event.action=${event.action}, ratingBar.rating=${ratingBar.rating}")
+//            var returnValue = false
+//            when (event.action) {
+//                MotionEvent.ACTION_DOWN -> ratingBar.tag = ratingBar.rating
+//                MotionEvent.ACTION_UP -> {
+//                    Log.d(TAG, "setOnTouchListener(), tag=${ratingBar.tag}, rating=${ratingBar.rating}")
+//                    if (ratingBar.tag == ratingBar.rating) {
+//                        Log.e(TAG, "ok!!")
+//                        dbHelper!!.deleteMovieRating(movie.title)
+//                        ratingBar.rating = 0f
+//                        returnValue = true
+//                    }
+//                }
 //            }
-            false
-        }
-
-        ib_back.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().remove(this).commit()
-        }
+//            returnValue
+//        }
     }
 
     private fun setScrollingAnimation() {
@@ -133,10 +149,12 @@ class MovieDetailFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(movie : Movie) =
+        fun newInstance(tabPosition: Int, fragmentFloor: Int, movie: Movie) =
             MovieDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(ARG_PARAM1, movie)
+                    putInt(ARG_PARAM_TAB_POSITION, tabPosition)
+                    putInt(ARG_PARAM_FRAGMENT_FLOOR, fragmentFloor)
+                    putSerializable(Constants.ARG_PARAM_MOVIE, movie)
                 }
             }
     }

@@ -39,9 +39,4 @@ class RadiusImageView : ImageView {
         canvas.clipPath(clipPath)
         super.onDraw(canvas)
     }
-
-    companion object {
-        // 라운드처리 강도 값을 크게하면 라운드 범위가 커짐
-        var radius = 18.0f
-    }
 }

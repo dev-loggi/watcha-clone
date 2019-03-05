@@ -89,6 +89,22 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+
+    <string name="movie_info_sample">
+        새로운 스파이더맨 평행세계의 시작!\n
+        “스파이더맨은… 우리 말고 얼마나 더 있죠?”\n\n
+
+        평범한 10대 ‘마일스 모랄레스’는 우연히 방사능 거미에 물려 스파이더맨 능력을 가지게 된다.\n
+        혼란스러워하던 ‘마일스’는 악당과 싸우고 있는 ‘피터 파커’를 마주치게 되고
+        ‘피터 파커’는 ‘마일스’가 자신과 같은 능력을 가지고 있음을 직감한다.\n
+        여러 개의 평행세계가 존재한다는 것을 알게 된 ‘마일스’와 ‘피터 파커’는
+        이후 스파이더우먼 ‘스파이더 그웬’, ‘스파이더맨 누아르’, ‘스파이더햄’ 등
+        평행세계 속 공존하는 모든 스파이더맨들을 만나게 되는데…\n
+        하나의 유니버스에서 만나 팀을 결성한 스파이더맨들은 과연 세계를 구할 수 있을까?\n\n
+
+        스파이더맨들의 새로운 시대가 열린다!
+    </string>
+
     <string name="action_settings">Settings</string>
 
     <string name="watcha">WATCHA</string>
@@ -99,6 +115,8 @@
 
     <string name="tab_title_recommendation">추천</string>
     <string name="tab_title_evaluation">평가하기</string>
+    <string name="tab_title_news">소식</string>
+    <string name="tab_title_mypage">마이페이지</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

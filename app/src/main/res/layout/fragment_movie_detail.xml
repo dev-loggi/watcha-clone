@@ -67,7 +67,7 @@
 
             <!-- 컨텐츠 메인 -->
             <LinearLayout android:id="@+id/container_header"
-                          android:layout_width="wrap_content"
+                          android:layout_width="match_parent"
                           android:layout_height="match_parent"
                           android:orientation="vertical"
                           android:gravity="center_horizontal"
@@ -84,11 +84,19 @@
 
                 <View android:layout_height="10dp" android:layout_width="match_parent" android:background="@color/stroke"/>
 
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/text_margin"
-                        android:text="@string/large_text"/>
+                <include layout="@layout/movie_detail_contents_info"/>
+
+                <View android:layout_height="10dp" android:layout_width="match_parent" android:background="@color/stroke"/>
+
+                <include layout="@layout/movie_detail_contents_more_movie"/>
+
+                <View android:layout_height="10dp" android:layout_width="match_parent" android:background="@color/stroke"/>
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:padding="16dp"
+                          android:text="@string/large_text"/>
+
+                <View android:layout_height="10dp" android:layout_width="match_parent" android:background="@color/stroke"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -105,9 +113,10 @@
             android:id="@+id/toolbar_layout" >
 
         <!-- statusbar 크기로 밑에 깔려있는 흰색 바 -->
-        <View android:id="@+id/fake_status_bar" android:layout_width="match_parent"
+        <View android:id="@+id/scrim_status_bar" android:layout_width="0dp"
               android:layout_height="1dp" android:background="@android:color/transparent"
-              tools:layout_editor_absoluteX="10dp"/>
+              app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"/>
 
         <ImageButton android:src="@drawable/arrow_back"
                      android:layout_width="?attr/actionBarSize"
@@ -115,7 +124,7 @@
                      android:id="@+id/ib_back"
                      app:layout_constraintStart_toStartOf="parent"
                      app:layout_constraintBottom_toBottomOf="parent"
-                     app:layout_constraintTop_toBottomOf="@+id/fake_status_bar" android:layout_margin="0dp"
+                     app:layout_constraintTop_toBottomOf="@+id/scrim_status_bar" android:layout_margin="0dp"
                      android:background="@android:color/transparent"
                      android:scaleType="fitCenter" android:padding="16dp" android:tint="@color/white"/>
 
@@ -125,14 +134,14 @@
                   android:textSize="20sp" android:textStyle="bold" android:textColor="@android:color/black"
                   android:text="스파이더맨"
                   android:visibility="gone"
-                  app:layout_constraintTop_toBottomOf="@+id/fake_status_bar" app:layout_constraintStart_toEndOf="@id/ib_back"
+                  app:layout_constraintTop_toBottomOf="@+id/scrim_status_bar" app:layout_constraintStart_toEndOf="@id/ib_back"
                   app:layout_constraintEnd_toStartOf="@id/ib_share"/>
 
         <ImageButton android:src="@drawable/share"
                      android:layout_width="?attr/actionBarSize"
                      android:layout_height="?attr/actionBarSize"
                      android:id="@+id/ib_share"
-                     app:layout_constraintTop_toBottomOf="@+id/fake_status_bar"
+                     app:layout_constraintTop_toBottomOf="@+id/scrim_status_bar"
                      app:layout_constraintEnd_toEndOf="parent"
                      app:layout_constraintBottom_toBottomOf="parent"
                      android:background="@android:color/transparent"

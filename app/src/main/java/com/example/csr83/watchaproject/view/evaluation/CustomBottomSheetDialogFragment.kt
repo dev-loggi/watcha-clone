@@ -41,6 +41,10 @@ class CustomBottomSheetDialogFragment : BottomSheetDialogFragment() {
         return super.onCreateDialog(savedInstanceState)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
     override fun setupDialog(dialog: Dialog, style: Int) {
         super.setupDialog(dialog, style)
         Log.d(TAG, "setupDialog()")

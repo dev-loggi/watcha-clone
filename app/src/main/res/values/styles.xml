@@ -15,4 +15,18 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+
+    <style name="AppTabLayout" parent="Widget.Design.TabLayout">
+        <!--<item name="tabIndicator">@android:color/holo_red_light</item>-->
+        <item name="tabIndicatorColor">#FF9800</item>
+        <item name="tabTextAppearance">@style/AppTabTextAppearance</item>
+        <item name="tabSelectedTextColor">@android:color/holo_red_light</item>
+    </style>
+
+    <!-- for text -->
+    <style name="AppTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@android:color/holo_red_light</item>
+        <!--<item name="textAllCaps">false</item>-->
+    </style>
 </resources>
