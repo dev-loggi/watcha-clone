@@ -1,15 +1,13 @@
 package com.example.csr83.watchaproject.view.recommendation
 
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
-import android.support.v4.app.Fragment
 import android.support.v4.widget.NestedScrollView
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.*
-import android.widget.Button
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import com.example.csr83.watchaproject.view.recommendation.adapter.RecommendationRvAdapter
 import com.example.csr83.watchaproject.R
@@ -17,6 +15,7 @@ import com.example.csr83.watchaproject.model.Movie
 import com.example.csr83.watchaproject.utils.Utils
 import com.example.csr83.watchaproject.view.base.BaseParentFragment
 import com.example.csr83.watchaproject.view.main.MainActivity
+import com.example.csr83.watchaproject.view.movie_detail.MovieDetailFragment
 import kotlinx.android.synthetic.main.fragment_recommendation2.*
 
 class RecommendationFragment : BaseParentFragment() {
@@ -46,6 +45,7 @@ class RecommendationFragment : BaseParentFragment() {
         }
 
         setScrollingAnimation()
+
     }
 
     fun startMovieDetailFragment(movie: Movie) {

@@ -49,21 +49,31 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
 
-        <com.example.csr83.watchaproject.utils.RadiusImageView
-                android:id="@+id/iv_movie"
-                android:layout_width="0dp"
-                android:layout_height="200dp" app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                app:topLeftRadius="8dp" app:topRightRadius="8dp"
-        />
+        <FrameLayout android:layout_width="0dp" android:layout_height="200dp"
+                     android:id="@+id/container_movie"
+                     app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintEnd_toEndOf="parent">
+
+            <com.example.csr83.watchaproject.utils.RadiusImageView
+                    android:id="@+id/iv_movie"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:topLeftRadius="8dp" app:topRightRadius="8dp"/>
+
+            <ImageView android:layout_width="80dp" android:layout_height="80dp"
+                       android:layout_gravity="center"
+                       android:id="@+id/iv_play" app:srcCompat="@drawable/play"
+                       android:visibility="gone"/>
+
+        </FrameLayout>
 
         <TextView
                 android:text="예상"
                 android:layout_width="35dp"
                 android:layout_height="20dp"
                 android:id="@+id/textView6"
-                android:layout_marginBottom="16dp" app:layout_constraintBottom_toBottomOf="@+id/iv_movie"
-                app:layout_constraintStart_toStartOf="@+id/iv_movie" android:layout_marginLeft="16dp"
+                android:layout_marginBottom="16dp" app:layout_constraintBottom_toBottomOf="@+id/container_movie"
+                app:layout_constraintStart_toStartOf="@+id/container_movie" android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp" android:textColor="@color/colorAccent" android:textSize="10sp"
                 android:gravity="center" android:background="@color/white"/>
         <TextView
@@ -79,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_movie_title" android:layout_marginTop="16dp"
                 android:textColor="@android:color/black"
-                app:layout_constraintTop_toBottomOf="@+id/iv_movie" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/container_movie" app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginLeft="16dp" android:layout_marginStart="16dp" android:textSize="18sp"
                 android:textStyle="bold"/>
         <TextView

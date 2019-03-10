@@ -5,15 +5,7 @@ import android.graphics.Color
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
-import android.util.Log
-import com.example.csr83.watchaproject.view.recommendation.MovieDetailFragment
 import com.example.csr83.watchaproject.R
-import com.example.csr83.watchaproject.view.evaluation.EvaluationFragment
-import com.example.csr83.watchaproject.view.mypage.MypageFragment
-import com.example.csr83.watchaproject.view.news.NewsFragment
-import com.example.csr83.watchaproject.view.recommendation.RecommendationFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

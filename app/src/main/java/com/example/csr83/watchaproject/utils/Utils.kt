@@ -9,9 +9,12 @@ import android.view.Window
 import android.view.WindowManager
 import com.example.csr83.watchaproject.R
 import com.example.csr83.watchaproject.model.Movie
+import com.google.android.exoplayer2.C
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.InputStream
+import java.util.*
+
 
 class Utils {
 
@@ -97,6 +100,26 @@ class Utils {
         private fun setNoTranslucentStatusBarKiKat(window: Window) {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         }
+
+        fun convertTimeFormat(ms: Long?): String {
+            if (ms == null)
+                return ""
+
+            val second = ms / 1000 % 60
+            val minute = ms / (1000 * 60) % 60
+            val hour = ms / (1000 * 60 * 60) % 24
+
+            return if (hour == 0L)
+                String.format("%d:%02d", minute, second)
+            else
+                String.format("%d:%02d:%02d", hour, minute, second)
+        }
+
+        fun convertPxToDp(px: Int, context: Context)
+                = (px / (context.resources.displayMetrics.densityDpi / 160f)).toInt()
+
+        fun convertDpToPx(dp: Int, context: Context)
+                = (dp * (context.resources.displayMetrics.densityDpi / 160f)).toInt()
 
     }
 }

@@ -5,17 +5,18 @@
                                              android:fitsSystemWindows="true"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             tools:context=".view.recommendation.MovieDetailFragment">
+                                             tools:context=".view.movie_detail.MovieDetailFragment">
 
     <!-- 영화 이미지 wide -->
     <FrameLayout android:layout_width="0dp" android:layout_height="230dp"
-                 android:id="@+id/iv_movie_wide2"
                  app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
                  app:layout_constraintEnd_toEndOf="parent" >
 
-        <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+        <ImageView android:layout_width="0dp" android:layout_height="230dp"
                    android:src="@drawable/poster_spiderman" android:scaleType="centerCrop"
-                   android:id="@+id/iv_movie_wide"/>
+                   android:id="@+id/iv_movie_wide"
+                   app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintEnd_toEndOf="parent"/>
 
         <!-- image mask -->
         <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/gradation_background_image_mask" android:alpha="0.8"/>

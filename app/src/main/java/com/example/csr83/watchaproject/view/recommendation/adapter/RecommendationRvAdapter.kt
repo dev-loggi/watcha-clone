@@ -1,24 +1,19 @@
 package com.example.csr83.watchaproject.view.recommendation.adapter
 
-import android.content.res.AssetManager
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.GlideDrawable
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.example.csr83.watchaproject.R
 import com.example.csr83.watchaproject.model.Movie
+import com.example.csr83.watchaproject.utils.Constants
 import com.example.csr83.watchaproject.utils.Utils
-import com.example.csr83.watchaproject.view.recommendation.MovieDetailFragment
+import com.example.csr83.watchaproject.view.exoplayer.ExoPlayerActivity
 import com.example.csr83.watchaproject.view.recommendation.RecommendationFragment
 import kotlinx.android.synthetic.main.recycler_view_card.view.*
-import org.json.JSONException
-import org.json.JSONObject
-import java.io.InputStream
-import java.lang.Exception
 
 class RecommendationRvAdapter(val fragment: RecommendationFragment) : RecyclerView.Adapter<RecommendationRvAdapter.CardViewHolder>() {
 
@@ -50,6 +45,16 @@ class RecommendationRvAdapter(val fragment: RecommendationFragment) : RecyclerVi
                 tvMovieTitle.text = item.title
                 tvMovieSubtitle.text = "영화 · ${item.year}"
 
+                if (position < 5) {
+                    ivPlay.visibility = View.VISIBLE
+                    ivPlay.setOnClickListener {
+                        fragment.activity!!.startActivity(
+                            Intent(fragment.context, ExoPlayerActivity::class.java)
+                                .putExtra(Constants.INTENT_KEY_MOVIE_TITLE, item.title)
+                        )
+                    }
+                }
+
                 itemView.setOnClickListener {
                     fragment.startMovieDetailFragment(item)
                 }
@@ -66,6 +71,7 @@ class RecommendationRvAdapter(val fragment: RecommendationFragment) : RecyclerVi
         val tvCardSubtitleUserName = itemView.tv_card_subtitle_user_name
         val tvCardSubtitleRight = itemView.tv_card_subtitle_right
         val ivMovie = itemView.iv_movie
+        val ivPlay = itemView.iv_play
         val tvMovieTitle = itemView.tv_movie_title
         val tvMovieSubtitle = itemView.tv_movie_subtitle
     }

@@ -1,6 +1,5 @@
-package com.example.csr83.watchaproject.view.recommendation
+package com.example.csr83.watchaproject.view.movie_detail
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.widget.NestedScrollView
@@ -14,8 +13,8 @@ import com.example.csr83.watchaproject.utils.Constants
 import com.example.csr83.watchaproject.utils.DBHelper
 import com.example.csr83.watchaproject.utils.Utils
 import com.example.csr83.watchaproject.view.base.BaseChildFragment
+import com.example.csr83.watchaproject.view.exoplayer.ExoGestureListener
 import com.example.csr83.watchaproject.view.main.MainActivity
-import com.example.csr83.watchaproject.view.recommendation.adapter.MovieDetailMoreMovieRvAdapter
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import kotlinx.android.synthetic.main.movie_detail_contents_more_movie.*
 
@@ -63,7 +62,11 @@ class MovieDetailFragment : BaseChildFragment(), MainActivity.OnBackPressedListe
     fun startMovieDetailFragment(movie: Movie) {
         (activity as MainActivity).myFragmentAdapter!!.createNewFragment(
             R.id.fragment_container,
-            MovieDetailFragment.newInstance(super.getTabPosition(), super.getFragmentFloor() + 1, movie),
+            newInstance(
+                super.getTabPosition(),
+                super.getFragmentFloor() + 1,
+                movie
+            ),
             super.getTabPosition(),
             super.getFragmentFloor() + 1
         )

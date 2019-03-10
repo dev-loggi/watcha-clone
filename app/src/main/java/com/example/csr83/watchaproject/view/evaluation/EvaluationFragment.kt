@@ -1,7 +1,6 @@
 package com.example.csr83.watchaproject.view.evaluation
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,7 @@ import com.example.csr83.watchaproject.utils.Utils
 import com.example.csr83.watchaproject.view.base.BaseParentFragment
 import com.example.csr83.watchaproject.view.evaluation.adapter.EvaluationRvAdapter
 import com.example.csr83.watchaproject.view.main.MainActivity
-import com.example.csr83.watchaproject.view.recommendation.MovieDetailFragment
+import com.example.csr83.watchaproject.view.movie_detail.MovieDetailFragment
 import kotlinx.android.synthetic.main.fragment_evaluation.*
 
 
