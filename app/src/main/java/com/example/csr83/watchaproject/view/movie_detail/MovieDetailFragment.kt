@@ -13,7 +13,6 @@ import com.example.csr83.watchaproject.utils.Constants
 import com.example.csr83.watchaproject.utils.DBHelper
 import com.example.csr83.watchaproject.utils.Utils
 import com.example.csr83.watchaproject.view.base.BaseChildFragment
-import com.example.csr83.watchaproject.view.exoplayer.ExoGestureListener
 import com.example.csr83.watchaproject.view.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import kotlinx.android.synthetic.main.movie_detail_contents_more_movie.*

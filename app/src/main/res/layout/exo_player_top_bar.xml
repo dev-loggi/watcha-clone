@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Top Bar -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:id="@+id/top_bar"
+             android:layout_width="match_parent" android:layout_height="@dimen/top_bottom_bar_height"
+             android:layout_gravity="top">
+
+    <!-- Top Bar Gradation Background -->
+    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                 android:background="@drawable/gradation_background_exoplayer_top"/>
+
+    <LinearLayout
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:orientation="horizontal" android:gravity="center_vertical">
+
+        <ImageView android:layout_width="@dimen/top_bottom_bar_height" android:layout_height="@dimen/top_bottom_bar_height"
+                   android:padding="12dp"
+                   android:id="@+id/iv_back"
+                   app:srcCompat="@drawable/arrow_back"
+                   android:tint="@color/white"/>
+
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                  android:layout_marginLeft="16dp" android:layout_weight="1"
+                  android:text="title"
+                  android:textColor="@color/white" android:textSize="22sp" android:id="@+id/tv_movie_title"/>
+
+        <ImageView android:layout_width="@dimen/top_bottom_bar_height" android:layout_height="@dimen/top_bottom_bar_height"
+                   android:padding="14dp"
+                   android:id="@+id/iv_pop_screen"
+                   app:srcCompat="@drawable/pop_screen"
+                   android:tint="@color/white"/>
+
+        <ImageView android:layout_width="@dimen/top_bottom_bar_height" android:layout_height="@dimen/top_bottom_bar_height"
+                   android:id="@+id/iv_info"
+                   android:padding="14dp"
+                   app:srcCompat="@drawable/info"
+                   android:tint="@color/white"/>
+
+        <ImageView android:layout_width="@dimen/top_bottom_bar_height" android:layout_height="@dimen/top_bottom_bar_height"
+                   android:id="@+id/iv_setting"
+                   android:padding="14dp"
+                   app:srcCompat="@drawable/setting"
+                   android:tint="@color/white"/>
+
+        <ImageView android:layout_width="@dimen/top_bottom_bar_height" android:layout_height="@dimen/top_bottom_bar_height"
+                   android:id="@+id/iv_lock"
+                   android:padding="14dp"
+                   app:srcCompat="@drawable/unlocked"
+                   android:tint="@color/white"/>
+
+    </LinearLayout>
+
+</FrameLayout>

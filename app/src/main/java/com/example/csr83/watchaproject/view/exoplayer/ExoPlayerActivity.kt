@@ -8,14 +8,15 @@ import android.support.v7.app.AppCompatActivity
 import com.example.csr83.watchaproject.R
 import com.google.android.exoplayer2.ui.PlayerView
 import kotlinx.android.synthetic.main.activity_exo_player.*
+import kotlinx.android.synthetic.main.exo_player_surface_controller.*
+import kotlinx.android.synthetic.main.exo_player_bottom_bar.*
 import android.util.Log
 import android.view.*
 import android.view.animation.AnimationUtils
-import android.widget.PopupWindow
 import android.widget.SeekBar
 import com.example.csr83.watchaproject.utils.Constants
 import com.example.csr83.watchaproject.utils.Utils
-import com.google.android.exoplayer2.Player
+import kotlinx.android.synthetic.main.exo_player_top_bar.*
 import java.lang.ref.WeakReference
 
 
@@ -28,6 +29,9 @@ class ExoPlayerActivity : AppCompatActivity() {
     fun getPlayer() = player
 
     private lateinit var timebarAsyncTask: TimeBarAsyncTask
+    private lateinit var leftGestureDetector: GestureDetector
+    private lateinit var centerGestureDetector: GestureDetector
+    private lateinit var rightGestureDetector: GestureDetector
     private lateinit var leftGestureListener: ExoGestureListener
     private lateinit var centerGestureListener: ExoGestureListener
     private lateinit var rightGestureListener: ExoGestureListener
@@ -48,6 +52,10 @@ class ExoPlayerActivity : AppCompatActivity() {
         leftGestureListener = ExoGestureListener(this, ExoGestureListener.POS_LEFT)
         centerGestureListener = ExoGestureListener(this, ExoGestureListener.POS_CENTER)
         rightGestureListener = ExoGestureListener(this, ExoGestureListener.POS_RIGHT)
+
+        leftGestureDetector = GestureDetector(this, leftGestureListener)
+        centerGestureDetector = GestureDetector(this, centerGestureListener)
+        rightGestureDetector = GestureDetector(this, rightGestureListener)
 
         initView()
     }
@@ -89,38 +97,32 @@ class ExoPlayerActivity : AppCompatActivity() {
                 iv_unlock.startAnimation(AnimationUtils.loadAnimation(this, R.anim.exoplayer_fade_in_top_bottom_bar))
             }
         }
-
-
         iv_play.setOnClickListener {
             player.play()
             updatePlayPauseButton()
         }
         iv_pause.setOnClickListener {
-            player.stop()
+            player.pause()
             updatePlayPauseButton()
         }
 
         controller_left.setOnTouchListener {_, event ->
-            GestureDetector(this, leftGestureListener).onTouchEvent(event)
+            leftGestureDetector.onTouchEvent(event)
             if (event.action == MotionEvent.ACTION_UP) {
                 leftGestureListener.onUp(event)
             }
             true
         }
         controller_center.setOnTouchListener {_, event ->
-            GestureDetector(this, centerGestureListener).onTouchEvent(event)
+            centerGestureDetector.onTouchEvent(event)
             true
         }
         controller_right.setOnTouchListener {_, event ->
-//            Log.i(TAG, "controller_right_touch_panel.setOnTouchListener, event=$event")
-            GestureDetector(this, rightGestureListener).onTouchEvent(event)
+            rightGestureDetector.onTouchEvent(event)
             if (event.action == MotionEvent.ACTION_UP) {
                 rightGestureListener.onUp(event)
             }
             true
-        }
-
-        surface_controller.setOnClickListener {
         }
 
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -194,18 +196,18 @@ class ExoPlayerActivity : AppCompatActivity() {
     fun updateTopBottomBarVisible() {
         val animFadeIn = AnimationUtils.loadAnimation(this, R.anim.exoplayer_fade_in_top_bottom_bar)
         val animFadeOut = AnimationUtils.loadAnimation(this, R.anim.exoplayer_fade_out_top_bottom_bar)
-        when (container_top_bar.visibility) {
+        when (top_bar.visibility) {
             View.VISIBLE -> {
-                container_top_bar.startAnimation(animFadeOut)
-                container_bottom_bar.startAnimation(animFadeOut)
-                container_top_bar.visibility = View.GONE
-                container_bottom_bar.visibility = View.GONE
+                top_bar.startAnimation(animFadeOut)
+                top_bar.visibility = View.GONE
+                bottom_bar.startAnimation(animFadeOut)
+                bottom_bar.visibility = View.GONE
             }
             View.GONE -> {
-                container_top_bar.startAnimation(animFadeIn)
-                container_bottom_bar.startAnimation(animFadeIn)
-                container_top_bar.visibility = View.VISIBLE
-                container_bottom_bar.visibility = View.VISIBLE
+                top_bar.startAnimation(animFadeIn)
+                top_bar.visibility = View.VISIBLE
+                bottom_bar.startAnimation(animFadeIn)
+                bottom_bar.visibility = View.VISIBLE
             }
         }
     }

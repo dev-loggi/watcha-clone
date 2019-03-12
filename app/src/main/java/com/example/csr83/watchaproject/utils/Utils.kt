@@ -115,6 +115,27 @@ class Utils {
                 String.format("%d:%02d:%02d", hour, minute, second)
         }
 
+        fun convertTimeFormat2(sec: Int?, type: Int): String {
+            if (sec == null)
+                return ""
+
+            val second = sec % 60
+            val minute = sec / 60 % 60
+            val hour = sec / (60 * 60) % 24
+
+            when (type) {
+                1 -> {
+                    return if (minute == 0)
+                        String.format("%02d초", second)
+                    else if (hour == 0)
+                        String.format("%d분 %02d초", minute, second)
+                    else
+                        String.format("%d시간 %02d분 %02d", hour, minute, second)
+                }
+                else -> return ""
+            }
+        }
+
         fun convertPxToDp(px: Int, context: Context)
                 = (px / (context.resources.displayMetrics.densityDpi / 160f)).toInt()
 

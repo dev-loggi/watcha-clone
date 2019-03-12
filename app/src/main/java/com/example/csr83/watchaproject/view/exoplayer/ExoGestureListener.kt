@@ -1,291 +1,155 @@
 package com.example.csr83.watchaproject.view.exoplayer
 
-import android.content.Context
 import android.os.AsyncTask
 import android.os.Build
-import android.support.v7.widget.LinearLayoutCompat
 import android.util.Log
 import android.view.*
 import android.view.animation.Animation
-import android.view.animation.AnimationSet
 import android.view.animation.AnimationUtils
 import android.widget.*
 import com.example.csr83.watchaproject.R
 import com.example.csr83.watchaproject.utils.Utils
-import kotlinx.android.synthetic.main.activity_exo_player.*
-import kotlinx.coroutines.delay
+import kotlinx.android.synthetic.main.exo_player_surface_controller.*
 import java.lang.ref.WeakReference
 
-class ExoGestureListener(private val activity: ExoPlayerActivity, private val controller_position: Int) : GestureDetector.SimpleOnGestureListener() {
+class ExoGestureListener(private val activity: ExoPlayerActivity, private val controller_position: Int)
+    : GestureDetector.SimpleOnGestureListener(), SurfaceControllerAnimator.ControllerAnimationListener {
     private val TAG = javaClass.simpleName
-
-    private var doubleTabAsyncTask: DoubleTapAsyncTask? = null
-    private var isStartScrolling = false
-    private var startScrollingY = 0f
-
-    override fun onDown(e: MotionEvent?): Boolean {
-        Log.d(TAG, "onDown(), e=$e")
-        if (e == null) return false
-
-        when (controller_position) {
-            POS_LEFT, POS_RIGHT -> startScrollingY = e.y
-        }
-
-        val task = doubleTabAsyncTask
-        Log.d(TAG, "${task == null}, $controller_position")
-        if (task == null) {
-            doubleTabAsyncTask = DoubleTapAsyncTask(activity, this, controller_position)
-            doubleTabAsyncTask!!.executeOnExecutor(
-                AsyncTask.THREAD_POOL_EXECUTOR,
-                controller_position.toLong(),
-                activity.getPlayer().getCurrentPosition() ?: 0L
-            )
-        } else if (!task.isCancelled) {
-            task.isDoubleTap = true
-        }
-
-        return false
-    }
-
-    override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
-        when (controller_position) {
-            POS_LEFT -> {
-                val offset = (startScrollingY + distanceY) * activity.seekBar_brightness.max / activity.seekBar_brightness.height
-                if (!isStartScrolling) {
-                    if (-1 < offset && offset < 1) {
-                        return false
-                    } else {
-                        isStartScrolling = true
-                        doubleTabAsyncTask?.isScrolling = true
-                        activity.seekBar_brightness.onExoTouchEvent(MotionEvent.ACTION_DOWN, 0f)
-                    }
-                }
-                isStartScrolling = activity.seekBar_brightness.onExoTouchEvent(MotionEvent.ACTION_SCROLL, offset)
-            }
-            POS_RIGHT -> {
-                val offset = (startScrollingY + distanceY) * activity.seekBar_sound.max / activity.seekBar_sound.height
-                Log.d(TAG, "onScroll() offset=$offset, distanceY=$distanceY, seekBar_sound.max=${activity.seekBar_sound.max}")
-
-                if (!isStartScrolling) {
-                    if (-1 < offset && offset < 1) {
-                        return false
-                    } else {
-                        isStartScrolling = true
-                        doubleTabAsyncTask?.isScrolling = true
-                        activity.seekBar_sound.onExoTouchEvent(MotionEvent.ACTION_DOWN, 0f)
-                    }
-                }
-                isStartScrolling = activity.seekBar_sound.onExoTouchEvent(MotionEvent.ACTION_SCROLL, offset)
-            }
-        }
-        return false
-    }
-
-    fun onUp(e: MotionEvent?) {
-        Log.d(TAG, "onUp()")
-        if (!isStartScrolling)
-            return
-        when (controller_position) {
-            POS_LEFT -> activity.seekBar_brightness.onExoTouchEvent(MotionEvent.ACTION_UP, 0f)
-            POS_RIGHT -> isStartScrolling = activity.seekBar_sound.onExoTouchEvent(MotionEvent.ACTION_UP, 0f)
-        }
-        isStartScrolling = false
-    }
-
-    fun setTaskNull() {
-        doubleTabAsyncTask = null
-    }
-
-
-    @SuppressWarnings("ClickableViewAccessibility")
-    private fun startDoubleTapButtonAnimation(type: Int, moveTime: Int, firstPosition: Long) {
-        Log.i(TAG, "startDoubleTapButtonAnimation(type: $type, moveTime: $moveTime, firstPosition: $firstPosition)")
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-            return
-
-        when (type) {
-            POS_LEFT, POS_RIGHT -> {
-//                activity.getPlayer().stop()
-                activity.getPlayer().seekTo(firstPosition + (moveTime * 1000L * type))
-                activity.updateTimeBar(firstPosition + (moveTime * 1000L * type))
-//                activity.getPlayer().play()
-                activity.updatePlayPauseButton()
-            }
-        }
-
-        // Container
-        var container: LinearLayout? = LinearLayout(activity)
-        val layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.MATCH_PARENT
-        )
-        when (type) {
-            POS_LEFT, POS_RIGHT -> layoutParams.setMargins(
-                Utils.convertDpToPx(24, activity), Utils.convertDpToPx(16, activity),
-                Utils.convertDpToPx(24, activity), Utils.convertDpToPx(16, activity)
-            )
-            POS_CENTER -> layoutParams.setMargins(
-                Utils.convertDpToPx(0, activity), Utils.convertDpToPx(12, activity),
-                Utils.convertDpToPx(12, activity), Utils.convertDpToPx(0, activity)
-            )
-        }
-        container?.layoutParams = layoutParams
-        container?.orientation = LinearLayout.VERTICAL
-        container?.background = activity.resources.getDrawable(R.drawable.exo_controller_background)
-        container?.gravity = Gravity.CENTER
-
-        // imageView
-        val imageView = ImageView(activity)
-        imageView.layoutParams = LinearLayout.LayoutParams(
-            Utils.convertDpToPx(50, activity),
-            Utils.convertDpToPx(50, activity)
-        )
-        imageView.setImageResource(when(type) {
-            POS_LEFT -> R.drawable.exo_controls_rewind
-            POS_CENTER ->
-                if (activity.getPlayer().isPlaying())
-                    R.drawable.exo_controls_pause else
-                    R.drawable.exo_controls_play
-            POS_RIGHT -> R.drawable.exo_controls_fastforward
-            else -> 0
-        })
-        container?.addView(imageView)
-
-        // textView
-        if (type == POS_LEFT || type == POS_RIGHT) {
-            val textView = TextView(activity)
-            textView.layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            textView.setTextColor(activity.resources.getColor(R.color.white))
-            textView.textSize = 18f
-            textView.text = "${moveTime}초"
-            container?.addView(textView)
-        }
-
-        if (type == POS_CENTER) {
-            if (activity.getPlayer().isPlaying()) {
-                activity.getPlayer().stop()
-            } else {
-                activity.getPlayer().play()
-            }
-            activity.updatePlayPauseButton()
-        } else {
-            val isOneTouch = false
-            container?.tag = isOneTouch
-            container?.setOnClickListener {
-                val isOneTouch = it.tag as Boolean
-                if (isOneTouch)
-                    return@setOnClickListener
-
-                val nextMoveTime = moveTime + 10
-                Log.i(TAG, "ok, nextMoveTime:$nextMoveTime, seekTo(${firstPosition + (nextMoveTime * 1000L * type)})")
-                startDoubleTapButtonAnimation(type, nextMoveTime, firstPosition)
-
-                it.tag = true
-            }
-        }
-
-        // addView container
-        when (type) {
-            POS_LEFT -> {
-                ((activity.controller_left
-                    .getChildAt(0) as? LinearLayout)
-                    ?.getChildAt(1) as? TextView)
-                    ?.visibility = View.INVISIBLE
-                activity.controller_left.addView(container, 0)
-            }
-            POS_CENTER -> activity.controller_center.addView(container, 0)
-            POS_RIGHT -> {
-                ((activity.controller_right
-                    .getChildAt(0) as? LinearLayout)
-                    ?.getChildAt(1) as? TextView)
-                    ?.visibility = View.INVISIBLE
-                activity.controller_right.addView(container, 0)
-            }
-        }
-
-        val animAppear = AnimationUtils.loadAnimation(activity, R.anim.exoplayer_appear_controller)
-        val animDisappear = AnimationUtils.loadAnimation(activity, R.anim.exoplayer_disappear_controller)
-        animAppear.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationRepeat(animation: Animation?) {}
-            override fun onAnimationStart(animation: Animation?) {}
-            override fun onAnimationEnd(animation: Animation?) {
-                Log.i(TAG, "onAnimationEnd(animAppear)")
-                container?.startAnimation(animDisappear)
-            }
-        })
-        animDisappear.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationRepeat(animation: Animation?) {}
-            override fun onAnimationStart(animation: Animation?) {}
-            override fun onAnimationEnd(animation: Animation?) {
-                Log.i(TAG, "onAnimationEnd(animDisappear)")
-                when (controller_position) {
-                    POS_LEFT -> activity.controller_left.removeView(container)
-                    POS_CENTER -> activity.controller_center.removeView(container)
-                    POS_RIGHT -> activity.controller_right.removeView(container)
-                }
-                container = null
-            }
-        })
-        container?.startAnimation(animAppear)
-    }
 
     companion object {
         val POS_LEFT = -1
         val POS_CENTER = 0
         val POS_RIGHT = 1
+    }
+    private val animator: SurfaceControllerAnimator
 
-        private class DoubleTapAsyncTask(activity: ExoPlayerActivity, private val caller: ExoGestureListener, private val taskType: Int) : AsyncTask<Long, Long, Unit>() {
-            private val TAG = javaClass.simpleName
+    private var isStartScrolling = false
+    private var scrollOffset = 0f
+    private var isStartingSurfaceController = false
 
-            private val activityReference: WeakReference<ExoPlayerActivity>?
-            var isDoubleTap = false
-            var isScrolling = false
+    init {
+        animator = SurfaceControllerAnimator(activity)
+        animator.setOnControllerAnimationListener(this)
+    }
 
-            init { activityReference = WeakReference(activity) }
+    /**
+     * Interface GestureDetector.SimpleOnGestureListener
+     */
+    override fun onDown(e: MotionEvent?): Boolean {
+        Log.w(TAG, "onDown(), e=$e")
+        return true
+    }
 
-            override fun doInBackground(vararg params: Long?) {
-                Log.e(TAG, "doInBackground()")
-                var loopTime = 0
+    override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
+        if (animator.isPlaying())
+            return true
 
-                while (loopTime < 200) {
-                    if (isDoubleTap || isScrolling)
-                        break
+        when (controller_position) {
+            POS_LEFT -> {
+                scrollOffset += distanceY * (activity.seekBar_brightness.max / activity.seekBar_brightness.height.toFloat())
 
-                    loopTime++
-                    Thread.sleep(1)
+                if (!isStartScrolling) {
+                    if (-1 < scrollOffset && scrollOffset < 1) {
+                        return true
+                    } else {
+                        isStartScrolling = true
+                        activity.seekBar_brightness.onExoTouchEvent(MotionEvent.ACTION_DOWN, 0f)
+                    }
                 }
-                publishProgress(params[0], params[1])
-                return
+                isStartScrolling = activity.seekBar_brightness.onExoTouchEvent(MotionEvent.ACTION_SCROLL, scrollOffset)
             }
+            POS_RIGHT -> {
+                scrollOffset += distanceY * (activity.seekBar_sound.max / activity.seekBar_sound.height.toFloat())
+                Log.d(TAG, "onScroll() offset=$scrollOffset, distanceY=$distanceY, seekBar_sound.max=${activity.seekBar_sound.max}")
 
-            override fun onProgressUpdate(vararg values: Long?) {
-                Log.e(TAG, "onProgressUpdate(${values[0]})")
-                val activity = activityReference?.get() as ExoPlayerActivity
-
-                if (isScrolling) { // Scrolling
-                } else if (!isDoubleTap) { // SingleTap
-                    activity.updateTopBottomBarVisible()
-
-                } else { // DoubleTap
-                    val type = values[0]!!.toInt()
-                    val firstPosition = values[1]!!
-
-//                    if (type == POS_LEFT || type == POS_RIGHT) {
-//                        activity.getPlayer().stop()
-//                        activity.updatePlayPauseButton()
-//                    }
-                    caller.startDoubleTapButtonAnimation(type, 10, firstPosition)
+                if (!isStartScrolling) {
+                    if (-1 < scrollOffset && scrollOffset < 1) {
+                        return true
+                    } else {
+                        isStartScrolling = true
+                        activity.seekBar_sound.onExoTouchEvent(MotionEvent.ACTION_DOWN, 0f)
+                    }
                 }
-            }
-
-            override fun onPostExecute(result: Unit?) {
-                Log.e(TAG, "onPostExecute()")
-                super.onPostExecute(result)
-                caller.setTaskNull()
+                isStartScrolling = activity.seekBar_sound.onExoTouchEvent(MotionEvent.ACTION_SCROLL, scrollOffset)
             }
         }
+        return true
     }
+
+    override fun onSingleTapUp(e: MotionEvent?): Boolean {
+        Log.w(TAG, "onSingleTapUp")
+        return true
+    }
+
+    override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
+        Log.w(TAG, "onSingleTapConfirmed")
+        if (animator.isPlaying())
+            return true
+        activity.updateTopBottomBarVisible()
+        return true
+    }
+
+    override fun onDoubleTap(e: MotionEvent?): Boolean {
+        Log.w(TAG, "onDoubleTap, animator.isPlaying()=${animator.isPlaying()}")
+        if (animator.isPlaying())
+            return true
+        val startPosition = activity.getPlayer().getCurrentPosition()
+            ?: return true
+
+        when (controller_position) {
+            POS_LEFT -> animator.startAnimationRewind(startPosition, 10)
+            POS_CENTER ->
+                if (activity.getPlayer().isPlaying())
+                    animator.startAnimationPause()
+                else
+                    animator.startAnimationPlay()
+            POS_RIGHT -> animator.startAnimationFfwd(startPosition, 10)
+        }
+
+        return true
+    }
+
+    /**
+     * Interface SurfaceControllerAnimator.ControllerAnimationListener
+     */
+    override fun onEachOneAnimationEnd(startTime: Long, rewindTime: Int) {
+        Log.i(TAG, "onEachOneAnimationEnd()")
+    }
+    override fun onAllAnimationEnd(startTime: Long, rewindTime: Int) {
+        Log.i(TAG, "onAllAnimationEnd()")
+    }
+    override fun onRewind(toTime: Long) {
+        Log.i(TAG, "onRewind()")
+        activity.getPlayer().seekTo(toTime)
+        activity.updateTimeBar(toTime)
+    }
+    override fun onFastForward(toTime: Long) {
+        Log.i(TAG, "onFastForward()")
+        activity.getPlayer().seekTo(toTime)
+        activity.updateTimeBar(toTime)
+    }
+    override fun onPlay() {
+        activity.getPlayer().play()
+        activity.updatePlayPauseButton()
+    }
+    override fun onPause() {
+        activity.getPlayer().pause()
+        activity.updatePlayPauseButton()
+    }
+
+    fun onUp(e: MotionEvent?) {
+        Log.i(TAG, "onUp")
+        if (controller_position == POS_CENTER)
+            return
+        if (isStartScrolling) {
+            when (controller_position) {
+                POS_LEFT -> activity.seekBar_brightness.onExoTouchEvent(MotionEvent.ACTION_UP, 0f)
+                POS_RIGHT -> isStartScrolling = activity.seekBar_sound.onExoTouchEvent(MotionEvent.ACTION_UP, 0f)
+            }
+            scrollOffset = 0f
+            isStartScrolling = false
+        }
+    }
+
+
 }

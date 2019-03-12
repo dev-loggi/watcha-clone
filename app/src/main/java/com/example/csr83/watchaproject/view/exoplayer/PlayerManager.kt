@@ -46,7 +46,7 @@ class PlayerManager(context: Context) {
 //    fun getExoPlayer() = player
 
     fun play() { player?.playWhenReady = true }
-    fun stop() { player?.playWhenReady = false }
+    fun pause() { player?.playWhenReady = false }
     fun seekTo(positionMs: Long) {
         var pos = positionMs
         val totalDuration = player?.duration

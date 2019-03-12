@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent" android:layout_height="match_parent"
+              android:orientation="horizontal" android:background="#00000000"
+              android:id="@+id/surface_controller">
+
+    <!-- Left -->
+    <FrameLayout android:layout_width="0dp" android:layout_height="match_parent"
+                 android:layout_weight="2"
+                 android:id="@+id/controller_left">
+
+        <com.example.csr83.watchaproject.view.exoplayer.VerticalSeekBar
+                android:layout_width="wrap_content" android:layout_height="200dp"
+                android:layout_marginLeft="80dp" android:layout_gravity="start|center_vertical"
+                android:id="@+id/seekBar_brightness"
+                android:max="100"
+                android:visibility="gone"/>
+
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_marginLeft="10dp" android:layout_marginBottom="14dp"
+                      android:layout_gravity="center"
+                      android:orientation="horizontal">
+
+            <ImageView android:layout_width="15dp" android:layout_height="15dp"
+                       android:id="@+id/iv_small_rewind_1"
+                       app:srcCompat="@drawable/small_play_left" android:tint="@color/white" 
+                       android:visibility="gone"/>
+
+            <ImageView android:layout_width="15dp" android:layout_height="15dp"
+                       android:id="@+id/iv_small_rewind_2"
+                       app:srcCompat="@drawable/small_play_left" android:tint="@color/white"
+                       android:visibility="gone"/>
+
+            <ImageView android:layout_width="15dp" android:layout_height="15dp"
+                       android:id="@+id/iv_small_rewind_3"
+                       app:srcCompat="@drawable/small_play_left" android:tint="@color/white"
+                       android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_marginLeft="12dp" android:layout_marginTop="14dp"
+                  android:layout_gravity="center"
+                  android:id="@+id/tv_rewind_time" android:text="10초"
+                  android:textColor="@color/white" android:textSize="16sp"
+                  android:visibility="gone"/>
+
+    </FrameLayout>
+
+    <!-- Center -->
+    <FrameLayout android:layout_width="0dp" android:layout_height="match_parent"
+                 android:layout_weight="1"
+                 android:id="@+id/controller_center">
+
+        <!-- Brightness View -->
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_gravity="center" android:gravity="center"
+                      android:orientation="horizontal"
+                      android:visibility="gone"
+                      android:id="@+id/brightness_view">
+
+            <ImageView android:layout_width="40dp" android:layout_height="40dp"
+                       android:layout_marginRight="8dp" android:layout_marginTop="2dp"
+                       app:srcCompat="@drawable/brightness" android:tint="@color/white"/>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:id="@+id/tv_brightness"
+                      android:text="000"
+                      android:textColor="@color/white" android:textSize="40sp"/>
+
+        </LinearLayout>
+
+        <!-- Sound View -->
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_gravity="center" android:gravity="center"
+                      android:orientation="horizontal"
+                      android:visibility="gone"
+                      android:id="@+id/sound_view">
+
+            <ImageView android:layout_width="30dp" android:layout_height="30dp"
+                       android:layout_marginRight="8dp"
+                       app:srcCompat="@drawable/sound" android:tint="@color/white"/>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:id="@+id/tv_sound"
+                      android:text="000"
+                      android:textColor="@color/white" android:textSize="40sp"/>
+
+        </LinearLayout>
+
+        <ImageView android:layout_width="50dp" android:layout_height="50dp"
+                   android:layout_gravity="center"
+                   android:id="@+id/iv_play_controller"
+                   app:srcCompat="@drawable/exo_controls_play"
+                   android:visibility="gone"/>
+
+        <ImageView android:layout_width="50dp" android:layout_height="50dp"
+                   android:layout_gravity="center"
+                   android:id="@+id/iv_pause_controller"
+                   app:srcCompat="@drawable/exo_controls_pause"
+                   android:visibility="gone"/>
+
+    </FrameLayout>
+
+    <!-- Right -->
+    <FrameLayout android:layout_width="0dp" android:layout_height="match_parent"
+                 android:layout_weight="2"
+                 android:id="@+id/controller_right">
+
+        <!-- Sound SeekBar -->
+        <com.example.csr83.watchaproject.view.exoplayer.VerticalSeekBar
+                android:layout_width="wrap_content" android:layout_height="200dp"
+                android:layout_marginRight="80dp" android:layout_gravity="end|center_vertical"
+                android:id="@+id/seekBar_sound"
+                android:max="100"
+                android:visibility="gone"/>
+
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_marginBottom="14dp"
+                      android:layout_gravity="center"
+                      android:orientation="horizontal">
+
+            <ImageView android:layout_width="15dp" android:layout_height="15dp"
+                       android:id="@+id/iv_small_ffwd_1"
+                       app:srcCompat="@drawable/small_play_right" android:tint="@color/white"
+                       android:visibility="gone"/>
+
+            <ImageView android:layout_width="15dp" android:layout_height="15dp"
+                       android:id="@+id/iv_small_ffwd_2"
+                       app:srcCompat="@drawable/small_play_right" android:tint="@color/white"
+                       android:visibility="gone"/>
+
+            <ImageView android:layout_width="15dp" android:layout_height="15dp"
+                       android:id="@+id/iv_small_ffwd_3"
+                       app:srcCompat="@drawable/small_play_right" android:tint="@color/white"
+                       android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_marginRight="2dp" android:layout_marginTop="14dp"
+                  android:layout_gravity="center"
+                  android:id="@+id/tv_ffwd_time" android:text="10초"
+                  android:textColor="@color/white" android:textSize="16sp"
+                  android:visibility="gone"/>
+
+    </FrameLayout>
+
+</LinearLayout>
