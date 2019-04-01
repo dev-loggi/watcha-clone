@@ -278,11 +278,10 @@ class ExoGestureListenerOld(private val activity: ExoPlayerActivity, private val
 
                 if (isScrolling) { // Scrolling
                 } else if (!isDoubleTap) { // SingleTap
-                    activity.updateTopBottomBarVisible()
+                    activity.updateTopBottomBarVisible(null)
 
                 } else { // DoubleTap
                     val startPosition = activity.getPlayer().getCurrentPosition()
-                        ?: return
 
                     caller.startDoubleTapButtonAnimation(type, 10, startPosition)
                 }

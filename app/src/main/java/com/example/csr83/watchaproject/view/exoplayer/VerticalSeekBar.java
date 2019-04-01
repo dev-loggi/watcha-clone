@@ -98,7 +98,7 @@ public class VerticalSeekBar extends AppCompatSeekBar {
         }
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                Log.d(getClass().getSimpleName(), "onExoTouchEvent(ACTION_DOWN)");
+                Log.d(getClass().getSimpleName(), "onExoTouchEvent(ACTION_DOWN), " + "getProgress()" + getProgress());
                 onChangeListener.onStartTrackingTouch(this);
                 mProgressWhenScrollingStarted = getProgress();
                 setPressed(true);
@@ -106,7 +106,7 @@ public class VerticalSeekBar extends AppCompatSeekBar {
                 break;
 
             case MotionEvent.ACTION_SCROLL:
-                Log.d(getClass().getSimpleName(), "offset=" + offset);
+                Log.d(getClass().getSimpleName(), "offset=" + offset + ", mProgressWhenScrollingStarted=" + mProgressWhenScrollingStarted);
 
                 int progress = mProgressWhenScrollingStarted + (int) offset;
 

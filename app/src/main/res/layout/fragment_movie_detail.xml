@@ -12,11 +12,9 @@
                  app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
                  app:layout_constraintEnd_toEndOf="parent" >
 
-        <ImageView android:layout_width="0dp" android:layout_height="230dp"
+        <ImageView android:layout_width="match_parent" android:layout_height="230dp"
                    android:src="@drawable/poster_spiderman" android:scaleType="centerCrop"
-                   android:id="@+id/iv_movie_wide"
-                   app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintEnd_toEndOf="parent"/>
+                   android:id="@+id/iv_movie_wide"/>
 
         <!-- image mask -->
         <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/gradation_background_image_mask" android:alpha="0.8"/>

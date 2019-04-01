@@ -106,11 +106,15 @@
     </string>
 
     <string name="content_url"><![CDATA[https://storage.googleapis.com/exoplayer-test-media-1/mkv/android-screens-lavf-56.36.100-aac-avc-main-1280x720.mkv]]></string>
+    <string name="content_url2"><![CDATA[https://drive.google.com/uc?authuser=0&id=1AZ7ZQ33WkkWhn8fwxTe4kd5az2vWNtY-&export=download]]></string>
+    <string name="content_url3"><![CDATA[https://sample-videos.com/video123/mkv/720/big_buck_bunny_720p_30mb.mkv]]></string>
+    <string name="content_url4"><![CDATA[https://drive.google.com/uc?export=download&confirm=V2Ii&id=1ES5nenLpQU1TWrBakDFEiSCHVXgvbWtb]]></string>
 
-    <string name="url_dash">https://bitdash-a.akamaihd.net/content/MI201109210084_1/mpds/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.mpd</string>
-    <string name="url_thumbnails">https://bitdash-a.akamaihd.net/content/MI201109210084_1/thumbnails/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.jpg</string>
-    <string name="url_smooth">http://playready.directtaps.net/smoothstreaming/SSWSS720H264/SuperSpeedway_720.ism</string>
-    <string name="url_hls">https://mnmedias.api.telequebec.tv/m3u8/29880.m3u8</string>
+
+    <string name="content_url_dash">https://bitdash-a.akamaihd.net/content/MI201109210084_1/mpds/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.mpd</string>
+    <string name="content_url_thumbnails">https://bitdash-a.akamaihd.net/content/MI201109210084_1/thumbnails/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.jpg</string>
+    <string name="content_url_smooth">http://playready.directtaps.net/smoothstreaming/SSWSS720H264/SuperSpeedway_720.ism</string>
+    <string name="content_url_hls">https://mnmedias.api.telequebec.tv/m3u8/29880.m3u8</string>
 
     <string name="action_settings">Settings</string>
 

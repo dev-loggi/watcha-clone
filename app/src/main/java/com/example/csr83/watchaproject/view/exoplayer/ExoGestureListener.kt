@@ -36,7 +36,7 @@ class ExoGestureListener(private val activity: ExoPlayerActivity, private val co
      * Interface GestureDetector.SimpleOnGestureListener
      */
     override fun onDown(e: MotionEvent?): Boolean {
-        Log.w(TAG, "onDown(), e=$e")
+        Log.d(TAG, "onDown(), e=$e")
         return true
     }
 
@@ -76,25 +76,19 @@ class ExoGestureListener(private val activity: ExoPlayerActivity, private val co
         return true
     }
 
-    override fun onSingleTapUp(e: MotionEvent?): Boolean {
-        Log.w(TAG, "onSingleTapUp")
-        return true
-    }
-
     override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
-        Log.w(TAG, "onSingleTapConfirmed")
+        Log.d(TAG, "onSingleTapConfirmed")
         if (animator.isPlaying())
             return true
-        activity.updateTopBottomBarVisible()
+        activity.updateTopBottomBarVisible(null)
         return true
     }
 
     override fun onDoubleTap(e: MotionEvent?): Boolean {
-        Log.w(TAG, "onDoubleTap, animator.isPlaying()=${animator.isPlaying()}")
+        Log.d(TAG, "onDoubleTap, animator.isPlaying()=${animator.isPlaying()}")
         if (animator.isPlaying())
             return true
         val startPosition = activity.getPlayer().getCurrentPosition()
-            ?: return true
 
         when (controller_position) {
             POS_LEFT -> animator.startAnimationRewind(startPosition, 10)
@@ -107,34 +101,6 @@ class ExoGestureListener(private val activity: ExoPlayerActivity, private val co
         }
 
         return true
-    }
-
-    /**
-     * Interface SurfaceControllerAnimator.ControllerAnimationListener
-     */
-    override fun onEachOneAnimationEnd(startTime: Long, rewindTime: Int) {
-        Log.i(TAG, "onEachOneAnimationEnd()")
-    }
-    override fun onAllAnimationEnd(startTime: Long, rewindTime: Int) {
-        Log.i(TAG, "onAllAnimationEnd()")
-    }
-    override fun onRewind(toTime: Long) {
-        Log.i(TAG, "onRewind()")
-        activity.getPlayer().seekTo(toTime)
-        activity.updateTimeBar(toTime)
-    }
-    override fun onFastForward(toTime: Long) {
-        Log.i(TAG, "onFastForward()")
-        activity.getPlayer().seekTo(toTime)
-        activity.updateTimeBar(toTime)
-    }
-    override fun onPlay() {
-        activity.getPlayer().play()
-        activity.updatePlayPauseButton()
-    }
-    override fun onPause() {
-        activity.getPlayer().pause()
-        activity.updatePlayPauseButton()
     }
 
     fun onUp(e: MotionEvent?) {
@@ -150,6 +116,28 @@ class ExoGestureListener(private val activity: ExoPlayerActivity, private val co
             isStartScrolling = false
         }
     }
+
+    /**
+     * Interface SurfaceControllerAnimator.ControllerAnimationListener
+     */
+    override fun onEachOneAnimationEnd(startTime: Long, rewindTime: Int) {}
+    override fun onAllAnimationEnd(startTime: Long, rewindTime: Int) {}
+    override fun onRewind(toTime: Long) {
+        activity.getPlayer().seekTo(toTime)
+        activity.updateTimeBar(toTime)
+    }
+    override fun onFastForward(toTime: Long) {
+        activity.getPlayer().seekTo(toTime)
+        activity.updateTimeBar(toTime)
+    }
+    override fun onPlay() {
+        activity.getPlayer().play()
+    }
+    override fun onPause() {
+        activity.getPlayer().pause()
+    }
+
+
 
 
 }

@@ -3,7 +3,8 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="wrap_content"
-              android:layout_height="wrap_content" android:paddingRight="8dp">
+              android:layout_height="wrap_content" android:layout_marginRight="8dp"
+              android:foreground="?android:attr/selectableItemBackground">
 
     <com.example.csr83.watchaproject.utils.RadiusImageView
             android:id="@+id/iv_movie"

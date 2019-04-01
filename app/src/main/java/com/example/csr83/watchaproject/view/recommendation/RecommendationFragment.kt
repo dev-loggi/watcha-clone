@@ -34,8 +34,8 @@ class RecommendationFragment : BaseParentFragment() {
         return inflater.inflate(R.layout.fragment_recommendation2, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         recycler_view.adapter = RecommendationRvAdapter(this)
         recycler_view.layoutManager = LinearLayoutManager(context)
@@ -44,7 +44,19 @@ class RecommendationFragment : BaseParentFragment() {
             swipe_refresh_layout.isRefreshing = false
         }
 
+        search_layout.setOnClickListener {  }
+        search_layout2.setOnClickListener {  }
+        frame_layout_movie.setOnClickListener {  }
+        frame_layout_tv.setOnClickListener {  }
+        frame_layout_book.setOnClickListener {  }
+
         setScrollingAnimation()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+
 
     }
 
@@ -69,7 +81,10 @@ class RecommendationFragment : BaseParentFragment() {
             Log.d(TAG, "setOnScrollChangeListener(), scrollX_"+scrollX+"_scrollY_"+scrollY+"_oldScrollX_"+oldScrollX+"_oldScrollY_"+oldScrollY)
 
             // WATCHA 로고 움직이기
-            (logo_watcha.layoutParams as ConstraintLayout.LayoutParams).topMargin = scrollY / 2
+//            (logo_watcha.layoutParams as ConstraintLayout.LayoutParams).topMargin = scrollY / 2
+            val params = logo_watcha.layoutParams as ConstraintLayout.LayoutParams
+            params.topMargin = scrollY / 2
+            logo_watcha.layoutParams = params
 
             // 상단바 show & hide
             if (search_layout.y < statusBarHeight + scrollY) {

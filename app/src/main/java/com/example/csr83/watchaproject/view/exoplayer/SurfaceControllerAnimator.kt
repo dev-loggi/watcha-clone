@@ -83,6 +83,9 @@ class SurfaceControllerAnimator(private val activity: ExoPlayerActivity) {
     fun setOnControllerAnimationListener(listener: ControllerAnimationListener) { this.listener = listener }
 
     fun startAnimationRewind(startTime: Long, rewindTime: Int) {
+        if (0 > startTime - (rewindTime - 10) * 1000)
+            return
+
         isPlaying = true
         listener?.onRewind(startTime - (rewindTime * 1000L))
 
@@ -146,6 +149,9 @@ class SurfaceControllerAnimator(private val activity: ExoPlayerActivity) {
     }
 
     fun startAnimationFfwd(startTime: Long, ffwdTime: Int) {
+        if (activity.getPlayer().getTotalDuration() < startTime + (ffwdTime - 10) * 1000)
+            return
+
         isPlaying = true
         listener?.onRewind(startTime + (ffwdTime * 1000L))
 

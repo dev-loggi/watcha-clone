@@ -49,13 +49,16 @@
                               app:layout_constraintHorizontal_bias="0.501"
                               android:id="@+id/linearLayout2" android:layout_marginTop="16dp"
                               app:layout_constraintTop_toBottomOf="@+id/search_layout"
+                              android:foreground="?android:attr/selectableItemBackground"
                               android:background="@drawable/round_corner_stroke_background">
 
                     <!-- 영화 -->
                     <FrameLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1" android:id="@+id/frame_layout_movie">
+                            android:layout_weight="1"
+                            android:id="@+id/frame_layout_movie"
+                            android:foreground="?android:attr/selectableItemBackground">
                         <LinearLayout
                                 android:orientation="vertical"
                                 android:layout_width="wrap_content"
@@ -65,7 +68,7 @@
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_gravity="center"
-                                    app:srcCompat="@drawable/temp" android:tint="@android:color/holo_green_light"/>
+                                    app:srcCompat="@drawable/movie" android:tint="@android:color/holo_green_light"/>
                             <TextView
                                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -83,7 +86,9 @@
                     <FrameLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:id="@+id/frame_layout_tv"
+                            android:foreground="?android:attr/selectableItemBackground">
                         <LinearLayout
                                 android:orientation="vertical"
                                 android:layout_width="wrap_content"
@@ -91,9 +96,9 @@
                                 android:layout_gravity="center">
                             <ImageView
                                     android:layout_width="50dp"
-                                    android:layout_height="40dp"
+                                    android:layout_height="40dp" android:layout_marginBottom="2dp"
                                     android:layout_gravity="center"
-                                    app:srcCompat="@drawable/temp" android:scaleType="fitCenter"
+                                    app:srcCompat="@drawable/tv" android:scaleType="fitCenter"
                                     android:tint="@android:color/holo_orange_light"/>
                             <TextView
                                     android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -112,7 +117,9 @@
                     <FrameLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:id="@+id/frame_layout_book"
+                            android:foreground="?android:attr/selectableItemBackground">
                         <LinearLayout
                                 android:orientation="vertical"
                                 android:layout_width="wrap_content"
@@ -122,7 +129,7 @@
                                     android:layout_width="50dp"
                                     android:layout_height="40dp"
                                     android:layout_gravity="center"
-                                    app:srcCompat="@drawable/temp" android:scaleType="fitCenter"
+                                    app:srcCompat="@drawable/book" android:scaleType="fitCenter"
                                     android:tint="@android:color/holo_blue_light"/>
                             <TextView
                                     android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -143,12 +150,14 @@
                         android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginEnd="16dp"
                         android:layout_marginRight="16dp" android:layout_marginBottom="48dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/header" android:id="@+id/search_layout"
+                        app:layout_constraintBottom_toBottomOf="@+id/header"
+                        android:id="@+id/search_layout"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:background="@drawable/all_round_corner_background">
 
                     <ImageView
                             android:layout_width="40dp"
-                            android:layout_height="0dp" app:srcCompat="@drawable/temp"
+                            android:layout_height="0dp" app:srcCompat="@drawable/search"
                             android:id="@+id/imageView2"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
@@ -163,7 +172,7 @@
                             android:textColor="@android:color/darker_gray"/>
                     <ImageView
                             android:layout_width="40dp"
-                            android:layout_height="0dp" app:srcCompat="@drawable/temp"
+                            android:layout_height="0dp" app:srcCompat="@drawable/barcode"
                             android:id="@+id/imageView3"
                             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent" android:padding="6dp"
@@ -205,13 +214,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:id="@+id/constraintLayout2"
+                    android:id="@+id/search_layout2"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:background="@drawable/all_round_corner_background_gray" android:layout_marginBottom="8dp"
                     android:layout_marginLeft="16dp" android:layout_marginRight="16dp" android:layout_marginTop="8dp">
 
                 <ImageView
                         android:layout_width="40dp"
-                        android:layout_height="0dp" app:srcCompat="@drawable/temp"
+                        android:layout_height="0dp" app:srcCompat="@drawable/search"
                         android:id="@+id/imageView5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
@@ -226,7 +236,7 @@
                         android:textColor="@android:color/darker_gray"/>
                 <ImageView
                         android:layout_width="40dp"
-                        android:layout_height="0dp" app:srcCompat="@drawable/temp"
+                        android:layout_height="0dp" app:srcCompat="@drawable/barcode"
                         android:id="@+id/imageView7"
                         app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent" android:padding="6dp"
