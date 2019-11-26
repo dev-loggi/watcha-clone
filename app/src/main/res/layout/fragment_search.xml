@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <View android:layout_width="match_parent" android:layout_height="0dp" android:id="@+id/scrim_status_bar" android:background="@color/white"/>
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent" android:layout_height="40dp"
+            android:layout_marginLeft="@dimen/search_fragment_side_margin" android:layout_marginRight="@dimen/search_fragment_side_margin"
+            android:layout_marginTop="12dp" android:layout_marginBottom="12dp"
+            android:background="@drawable/all_round_corner_background_gray">
+
+        <ImageView android:layout_width="40dp" android:layout_height="match_parent"
+                   android:layout_marginLeft="4dp"
+                   android:padding="8dp"
+                   android:id="@+id/iv_back"
+                   android:tint="@color/gray1"
+                   android:foreground="?attr/selectableItemBackground"
+                   app:layout_constraintLeft_toLeftOf="parent"
+                   app:srcCompat="@drawable/arrow_back"/>
+
+        <EditText android:layout_width="0dp" android:layout_height="match_parent"
+                  android:layout_marginLeft="8dp"
+                  android:id="@+id/edt_search"
+                  android:textSize="16sp"
+                  android:hint="@string/edit_text_search"
+                  android:imeOptions="actionSearch"
+                  android:inputType="text"
+                  android:background="@android:color/transparent"
+                  app:layout_constraintLeft_toRightOf="@id/iv_back" app:layout_constraintRight_toLeftOf="@id/iv_search"/>
+
+        <ImageView android:layout_width="40dp" android:layout_height="match_parent"
+                   android:layout_marginRight="4dp"
+                   android:padding="6dp"
+                   android:id="@+id/iv_search"
+                   android:tint="@color/gray9"
+                   app:srcCompat="@drawable/search"
+                   android:foreground="?attr/selectableItemBackground"
+                   app:layout_constraintRight_toRightOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/stroke"/>
+
+    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent">
+
+        <!-- 최근 검색 목록 -->
+        <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:id="@+id/recycler_view_search_recent"
+                android:visibility="gone"/>
+
+        <!-- 검색 결과: Has data -->
+        <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent" android:layout_height="match_parent"
+                android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
+                android:id="@+id/recycler_view_search_result_container"
+                android:visibility="gone">
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                          android:orientation="vertical">
+
+                <TextView
+                        android:text="상위 검색 결과"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="15dp" android:layout_marginBottom="12dp"
+                        android:id="@+id/tv_search"
+                        android:textSize="20sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent" android:layout_height="match_parent"
+                        android:id="@+id/recycler_view_search_result"/>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+        <!-- 검색 결과: No data -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                      android:gravity="center"
+                      android:orientation="vertical"
+                      android:id="@+id/ll_no_search_data"
+                      android:visibility="gone">
+
+            <ImageView android:layout_width="80dp" android:layout_height="80dp"
+                       app:srcCompat="@drawable/sad_icon"/>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_marginTop="12dp"
+                      android:gravity="center"
+                      android:text="@string/fragment_search_no_data"
+                      android:textSize="14sp"
+                      android:textColor="@color/gray1"/>
+
+        </LinearLayout>
+
+        <include android:layout_width="wrap_content" android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+                 layout="@layout/loading_progressbar"/>
+
+    </FrameLayout>
+
+
+</LinearLayout>

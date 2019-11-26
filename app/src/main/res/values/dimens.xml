@@ -6,4 +6,8 @@
 
     <!-- ExoPlayer : Top & Bottom Bar -->
     <dimen name="top_bottom_bar_height">50dp</dimen>
+
+    <!-- SearchFragment -->
+    <dimen name="search_fragment_side_margin">16dp</dimen>
+
 </resources>

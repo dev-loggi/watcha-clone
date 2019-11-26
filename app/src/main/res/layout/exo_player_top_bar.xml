@@ -18,7 +18,8 @@
                    android:padding="12dp"
                    android:id="@+id/iv_back"
                    app:srcCompat="@drawable/arrow_back"
-                   android:tint="@color/white"/>
+                   android:tint="@color/white"
+                   android:foreground="?attr/selectableItemBackground"/>
 
         <TextView android:layout_width="0dp" android:layout_height="wrap_content"
                   android:layout_marginLeft="16dp" android:layout_weight="1"
@@ -27,27 +28,31 @@
 
         <ImageView android:layout_width="@dimen/top_bottom_bar_height" android:layout_height="@dimen/top_bottom_bar_height"
                    android:padding="14dp"
-                   android:id="@+id/iv_pop_screen"
+                   android:id="@+id/iv_pip_mode"
                    app:srcCompat="@drawable/pop_screen"
-                   android:tint="@color/white"/>
+                   android:tint="@color/white"
+                   android:foreground="?attr/selectableItemBackground"/>
 
         <ImageView android:layout_width="@dimen/top_bottom_bar_height" android:layout_height="@dimen/top_bottom_bar_height"
                    android:id="@+id/iv_info"
                    android:padding="14dp"
                    app:srcCompat="@drawable/info"
-                   android:tint="@color/white"/>
+                   android:tint="@color/white"
+                   android:foreground="?attr/selectableItemBackground"/>
 
         <ImageView android:layout_width="@dimen/top_bottom_bar_height" android:layout_height="@dimen/top_bottom_bar_height"
                    android:id="@+id/iv_setting"
                    android:padding="14dp"
                    app:srcCompat="@drawable/setting"
-                   android:tint="@color/white"/>
+                   android:tint="@color/white"
+                   android:foreground="?attr/selectableItemBackground"/>
 
         <ImageView android:layout_width="@dimen/top_bottom_bar_height" android:layout_height="@dimen/top_bottom_bar_height"
                    android:id="@+id/iv_lock"
                    android:padding="14dp"
                    app:srcCompat="@drawable/unlocked"
-                   android:tint="@color/white"/>
+                   android:tint="@color/white"
+                   android:foreground="?attr/selectableItemBackground"/>
 
     </LinearLayout>
 

@@ -13,7 +13,7 @@
             android:theme="@style/AppTheme">
 
         <activity
-                android:name=".view.main.MainActivity"
+                android:name=".presentation.main.MainActivity"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,7 +22,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.exoplayer.ExoPlayerActivity"/>
+        <activity android:name=".presentation.exoplayer.ExoPlayerActivity"
+                  android:resizeableActivity="true"
+                  android:supportsPictureInPicture="true"
+                  android:launchMode="singleTask"
+                  android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"/>
+        <activity android:name=".presentation.evaluation.SelectCategoryActivity" android:theme="@style/Theme.Transparent"/>
+        <activity android:name="com.example.csr83.watchaproject.legacy.TransitionTestActivity"/>
+        <activity android:name=".presentation.movieDetailActivity.MovieDetailActivity"
+                  android:theme="@style/AppTheme.NoActionBar.TransParentStatus"/>
+
     </application>
 
 </manifest>

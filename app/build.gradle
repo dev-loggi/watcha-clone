@@ -4,10 +4,12 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.example.csr83.kotlinexam2"
+        applicationId "com.example.csr83.watchaproject"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
@@ -19,9 +21,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-    lintOptions {
-        disable 'RestrictedApi'
     }
 }
 
@@ -45,9 +44,12 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:2.8.0'
     implementation 'com.google.android.exoplayer:exoplayer-dash:2.8.0'
     implementation 'com.google.android.exoplayer:exoplayer-hls:2.8.0'
-}
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
+
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
+//    implementation 'android.arch.persistence.room:runtime:2.0.0'
+//    annotationProcessor 'android.arch.persistence.room:compiler:2.0.0'
+//    implementation "androidx.room:room-runtime:2.0.0"
+//    kapt "androidx.room:room-compiler:2.0.0"
+    kapt "android.arch.persistence.room:compiler:1.1.1"
 }

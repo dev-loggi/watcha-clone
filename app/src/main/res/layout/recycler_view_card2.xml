@@ -9,6 +9,7 @@
     <com.example.csr83.watchaproject.utils.RadiusImageView
             android:id="@+id/iv_movie"
             android:layout_width="100dp" android:layout_height="150dp"
+            android:transitionName="@string/transition_name_movie_tall"
             app:topLeftRadius="6dp" app:topRightRadius="6dp"
             app:bottomLeftRadius="6dp" app:bottomRightRadius="6dp"/>
 

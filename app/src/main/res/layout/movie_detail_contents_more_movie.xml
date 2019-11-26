@@ -11,11 +11,18 @@
               android:text="관련된 영화 추천"
               android:textSize="18sp" android:textStyle="bold" android:textColor="@android:color/black"/>
 
-    <android.support.v7.widget.RecyclerView android:id="@+id/recycler_view"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:orientation="horizontal"
-                                            android:layout_marginTop="8dp"
-                                            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+    <FrameLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                 android:layout_marginTop="8dp">
 
+        <include android:layout_width="match_parent" android:layout_height="wrap_content"
+                 layout="@layout/loading_progressbar"/>
+
+        <android.support.v7.widget.RecyclerView android:id="@+id/recycler_view_more_movies"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="horizontal"
+                                                android:visibility="gone"
+                                                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+    </FrameLayout>
 </LinearLayout>

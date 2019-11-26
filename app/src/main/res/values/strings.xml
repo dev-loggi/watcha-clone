@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Watcha by Seongrok</string>
+
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -89,7 +90,6 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-
     <string name="movie_info_sample">
         새로운 스파이더맨 평행세계의 시작!\n
         “스파이더맨은… 우리 말고 얼마나 더 있죠?”\n\n
@@ -110,7 +110,6 @@
     <string name="content_url3"><![CDATA[https://sample-videos.com/video123/mkv/720/big_buck_bunny_720p_30mb.mkv]]></string>
     <string name="content_url4"><![CDATA[https://drive.google.com/uc?export=download&confirm=V2Ii&id=1ES5nenLpQU1TWrBakDFEiSCHVXgvbWtb]]></string>
 
-
     <string name="content_url_dash">https://bitdash-a.akamaihd.net/content/MI201109210084_1/mpds/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.mpd</string>
     <string name="content_url_thumbnails">https://bitdash-a.akamaihd.net/content/MI201109210084_1/thumbnails/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.jpg</string>
     <string name="content_url_smooth">http://playready.directtaps.net/smoothstreaming/SSWSS720H264/SuperSpeedway_720.ism</string>
@@ -129,6 +128,14 @@
     <string name="tab_title_news">소식</string>
     <string name="tab_title_mypage">마이페이지</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="transition_name_movie_tall">transition_name_movie_tall</string>
+    <string name="transition_name_movie_wide">transition_name_movie_wide</string>
+
+    <string name="edit_text_search">검색</string>
+    <string name="fragment_search_no_data">검색 결과가 없어요.\n다른 검색어를 입력해보세요.</string>
+
+    <string name="exoplayer_no_translations">자막이 없습니다.</string>
+
+    <string name="alert_dialog_message_remove_recent_search_history">선택된 검색 기록을 삭제하시겠습니까?</string>
+    <string name="alert_dialog_message_remove_all_recent_search_history">검색 기록을 모두 삭제하시겠습니까?</string>
 </resources>

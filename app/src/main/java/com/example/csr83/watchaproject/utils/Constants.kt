@@ -8,5 +8,7 @@ class Constants {
 
         const val HANDLE_MESSAGE_TIME_SEEK_BAR = 0
         const val HANDLE_MESSAGE_PROGRESS_MAX_VALUE = 1
+
+        const val REQUEST_CODE_CATEGORY = 1000
     }
 }
